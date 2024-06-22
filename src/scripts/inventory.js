@@ -30,44 +30,47 @@ $(document).on('click', '#inventoryLink', function(ev) {
         return;
     }
 
-    // Define the grid slots
-    const slots = ['head', 'chest', 'hands', 'legs', 'feet', 'weapon', 'offhand', 'accessory'];
+    const slots = ['head', 'left-hand', 'chest', 'right-hand', 'legs', 'feet', 'accessory1', 'accessory2', 'accessory3'];
     
-    // Generate inventory grid content
-    let inventoryGrid = '';
     for (let slot of slots) {
         let item = State.variables.inventory.find(i => i.hasAttribute(slot));
-        inventoryGrid += `
-            <div class="slot ${slot}">
-                <h3>${slot.charAt(0).toUpperCase() + slot.slice(1)}</h3>
-                ${item ? item.getDescription() : 'Empty'}
-            </div>
-        `;
+        $(`.slot.${slot}`).html(item ? item.getDescription() : 'Empty');
     }
 
-    // Generate general inventory content for items without specific slots
-    let generalInventory = '<h3>Other Items</h3><ul>';
+    let generalInventory = '';
     for (let item of State.variables.inventory) {
         if (!slots.some(slot => item.hasAttribute(slot))) {
             generalInventory += `<li>${item.getDescription()}</li>`;
         }
     }
-    generalInventory += '</ul>';
+    $('#general-inventory ul').html(generalInventory);
 
     const popupContent = `
-      <div id="popup">
-        <div id="popup-content">
+    <div id="popup">
+      <div id="popup-content">
           <h2>INVENTORY</h2>
-          <div id="inventory-grid" class="inventory-grid">${inventoryGrid}</div>
-          <div id="general-inventory" class="general-inventory">${generalInventory}</div>
+          <div id="inventory-grid" class="inventory-grid">
+              <div class="slot head">Head</div>
+              <div class="slot left-hand">Left Hand</div>
+              <div class="slot chest">Chest</div>
+              <div class="slot right-hand">Right Hand</div>
+              <div class="slot legs">Legs</div>
+              <div class="slot feet">Feet</div>
+              <div class="slot accessory1">Accessory</div>
+              <div class="slot accessory2">Accessory</div>
+              <div class="slot accessory3">Accessory</div>
+          </div>
+          <div id="general-inventory" class="general-inventory">
+              <h3>Other Items</h3>
+              <ul></ul>
+          </div>
           <button id="close-popup">Close</button>
-        </div>
       </div>
-    `;
+    </div>`;
 
     $('body').append(popupContent);
 
     $('#close-popup').on('click', function() {
-      $('#popup').remove();
+        $('#popup').remove();
     });
 });

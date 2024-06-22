@@ -24,13 +24,11 @@
 .inventory-grid {
   display: grid;
   grid-template-areas:
-      "head head"
-      "chest chest"
-      "hands hands"
-      "legs legs"
-      "feet feet"
-      "weapon offhand"
-      "accessory accessory";
+      ". head ."
+      "left-hand chest right-hand"
+      ". legs ."
+      ". feet ."
+      "accessory1 accessory2 accessory3";
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -42,13 +40,14 @@
 }
 
 .slot.head { grid-area: head; }
+.slot.left-hand { grid-area: left-hand; }
 .slot.chest { grid-area: chest; }
-.slot.hands { grid-area: hands; }
+.slot.right-hand { grid-area: right-hand; }
 .slot.legs { grid-area: legs; }
 .slot.feet { grid-area: feet; }
-.slot.weapon { grid-area: weapon; }
-.slot.offhand { grid-area: offhand; }
-.slot.accessory { grid-area: accessory; }
+.slot.accessory1 { grid-area: accessory1; }
+.slot.accessory2 { grid-area: accessory2; }
+.slot.accessory3 { grid-area: accessory3; }
 
 .general-inventory {
   text-align: left;
