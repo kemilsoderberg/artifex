@@ -1,0 +1,53 @@
+:: Camp
+You have arrived at the camp.
+<<if $timeIndex is 0>>
+The sun is rising, and the birds are singing.
+<<elseif $timeIndex is 1>>
+The sun is high in the sky, and the camp is bustling with activity.
+<<elseif $timeIndex is 2>>
+The sun is setting, casting a warm glow over the camp.
+<<elseif $timeIndex is 3>>
+The fire is warm, and the stars are bright.
+<</if>>
+
+<<set $sword = new Item(1, "Sword", "weapon", { attack: 10, weight: 5 })>>
+<<set $shield = new Item(2, "Shield", "armor", { defense: 15, weight: 10 })>>
+<<set $inventory = [$sword, $shield]>>
+
+<<link "Check your items">>
+    <<goto "Inventory">>
+<</link>>
+
+
+[[Sleep]]
+[[Work]]
+[[Explore]]
+
+:: Sleep
+Good night!
+<<set $timeIndex to ($timeIndex + 1) % $time.length>>
+<<if $timeIndex is 0>>
+    <<set $dayIndex to $dayIndex + 1>>
+<</if>>
+
+[[Camp]]
+
+:: Work
+Select which work needs to be done:
+[[Gather food]]
+[[Chop wood]]
+
+
+:: Explore
+Time to explore!
+
+[[Explore around the camp site]]
+<<if $exploration > 0 >>
+    [[Explore in the forest]]
+<</if>>
+
+
+:: Inventory
+Your items:
+* Sword: <<= $sword.getDescription()>>
+* Shield: <<= $shield.getDescription()>>

@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>&lt;&lt;audioloopto&gt;&gt; macro set for SugarCube 2.x</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<!-- FONT AWESOME (v4) -->
+<style type="text/css">
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+</style>
+
+<!-- CORE -->
+<style type="text/css">
+/*
+	SugarCube documentation stylesheet
+	Author: Thomas Michael Edwards - https://motoslave.net
+	Version: 2018-12-10T16:51:24-06:00
+*/
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address,
+big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center,
+dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside,
+canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time,
+mark, audio, video {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+header, footer, nav, section, article, aside, details, figure, hgroup {
+	display: block;
+}
+
+mark, time {
+	display: inline;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+	background-color: #fff;
+	color: #111;
+	font-family: helvetica, arial, "dejavu sans", freesans, clean, sans-serif;
+	font-size: 14px;
+	line-height: 1.6;
+	margin: 0 0 0 23.5em;
+	max-width: 69em;
+	padding: 20px;
+}
+
+body>*:first-child {
+	margin-top: 0 !important;
+}
+
+body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+	margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 1.5em 0 0.75em;
+	padding: 0;
+	font-weight: bold;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+} */
+
+h1 {
+	background-color: #ccc;
+	border-radius: 3px;
+	font-size: 2em;
+	margin: 2em -0.5em 1em;
+	padding: 0.5em 0 0.5em 0.5em;
+	position: relative;
+}
+body>h1:first-of-type {
+	margin-top: 0;
+}
+
+h2 {
+	border-top: 2px solid #aaa;
+	font-size: 1.71em;
+	padding-top: 0.75em;
+}
+
+h3 {
+	border-top: 1px dashed #aaa;
+	font-size: 1.28em;
+	padding-top: 0.5em;
+}
+
+h4 {
+	font-size: 1.14em;
+}
+
+h5 {
+	font-size: 1em;
+}
+
+h6 {
+	color: #777;
+	font-size: 1em;
+}
+
+h1+h2 {
+	border: none;
+	padding-top: 0;
+}
+h1+h3, h2+h3 {
+	border: none;
+}
+/* Below are the current markdown versions—e.g. `<span/>\n##` → `<p><span/></p>\n<h2>`. */
+h1+p+h2 {
+	border: none;
+	padding-top: 0;
+}
+h1+p+h3, h2+p+h3 {
+	border: none;
+}
+
+/* body>h1 a:first-child,
+body>h2 a:first-child,
+body>h3 a:first-child,
+body>h4 a:first-child,
+body>h5 a:first-child,
+body>h6 a:first-child {
+}
+body>h1 a:first-child::before,
+body>h2 a:first-child::before,
+body>h3 a:first-child::before,
+body>h4 a:first-child::before,
+body>h5 a:first-child::before,
+body>h6 a:first-child::before {
+	content: "\f0c1";
+	display: inline-block;
+	float: left;
+	font-family: FontAwesome;
+	margin-left: -2em;
+	text-align: center;
+	text-decoration: none;
+	width: 2em;
+} */
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+	margin-top: 10px;
+}
+
+h3>div {
+	margin-left: 1.5em;
+}
+
+h4>em, h5>em,
+h4>i, h5>i {
+	font-weight: normal;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+	color: #4183C4;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a[href*="-fn"] {
+	font-size: 0.83em;
+	vertical-align: super;
+}
+a[href*="-fn"]::before {
+	content: "[";
+}
+a[href*="-fn"]::after {
+	content: "]";
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+	margin-left: 30px;
+}
+/* li ul, li ol, dt ul, dt ol {
+	margin-left: 15px;
+} */
+
+ul li>:first-child,
+ol li>:first-child,
+ul li ul:first-of-type,
+ol li ol:first-of-type,
+ul li ol:first-of-type,
+ol li ul:first-of-type {
+	margin-top: 0;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+	margin-bottom: 0;
+}
+
+ul.keys, ol.keys,
+ul.params, ol.params {
+	list-style: none;
+	margin-left: 15px;
+}
+
+ul.note, ol.note {
+	margin-left: 2em;
+}
+
+ul.asnote, ol.asnote {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+dl {
+	margin-left: 15px;
+}
+
+dl dt {
+	font-style: normal;
+	font-weight: bold;
+	padding: 0;
+	margin: 15px 0 5px;
+}
+dl dt:first-child {
+	padding: 0;
+}
+dl dt>:first-child {
+	margin-top: 0;
+}
+dl dt>:last-child {
+	margin-bottom: 0;
+}
+
+dl dd {
+	margin: 0 15px 15px;
+}
+dl dd>:first-child {
+	margin-top: 0;
+}
+dl dd>:last-child {
+	margin-bottom: 0;
+}
+
+dl.keys dt, dl.params dt {
+	margin: 0;
+}
+dl.keys dd, dl.params dd {
+	margin-bottom: 0;
+}
+
+/* NOTES
+=============================================================================*/
+
+/*
+	\1f4a1 → light bulb
+	\1f4dd → memo
+	\1f6a7 → construction
+	\1f6a8 → police car light
+	\1f6d1 → stop sign
+*/
+div[role="note"], p[role="note"] {
+	background-color: #f8f8f8;
+	border: 1px solid #ccc;
+	border-left: 4px solid #db0;
+	border-radius: 3px;
+	margin: 15px;
+	padding: 6px 10px 6px 2em;
+}
+div[role="note"]::before, p[role="note"]::before {
+	content: "\1f4dd";
+	display: inline-block;
+	float: left;
+	font-weight: bold;
+	margin-left: -2em;
+	text-align: center;
+	text-transform: uppercase;
+	width: 2em;
+}
+div[role="note"].warning, p[role="note"].warning {
+	border-left-color: #f44;
+}
+div[role="note"].warning::before, p[role="note"].warning::before {
+	content: "\1f6a8";
+}
+
+div[role="note"]>b:first-child, p[role="note"]>b:first-child {
+	text-transform: uppercase;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code {
+	font-family: "consolas", "dejavu sans mono", "liberation mono", "courier new", monospace;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #ccc;
+	border-left: 4px solid #88f;
+	border-radius: 3px;
+	line-height: 19px;
+	margin: 0 15px;
+	overflow: auto;
+	padding: 6px 10px;
+}
+
+code {
+	background-color: #f8f8f8;
+	border: 1px solid #eaeaea;
+	border-radius: 3px;
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+}
+
+h1 code, pre>code {
+	background: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
+	white-space: pre;
+}
+
+pre code, h2 code {
+	background-color: transparent;
+	border: none;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+	padding: 0 30px;
+}
+
+blockquote>:first-child {
+	margin-top: 0;
+}
+
+blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+	clear: both;
+	margin: 15px 0;
+	height: 0;
+	overflow: hidden;
+	border: none;
+	background: transparent;
+	border-top: 1px solid #aaa;
+	padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: 0 15px;
+}
+
+table th {
+	font-weight: bold;
+}
+
+table th, table td {
+	border: 1px solid #ccc;
+	padding: 3px 7px;
+}
+
+table td code {
+	border: none;
+	background-color: transparent;
+}
+
+table td p {
+	margin-bottom: 0;
+}
+table td p:first-child {
+	margin-top: 0;
+}
+
+table td pre {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background-color: transparent;
+}
+
+table tr {
+	border-top: 1px solid #ccc;
+	background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+	max-width: 100%;
+}
+
+/* INFORMATIONAL
+=============================================================================*/
+
+abbr, span.info {
+	border-bottom: 1px dashed #000;
+	cursor: help;
+	font-variant: none;
+	text-decoration: none;
+}
+
+/* CLASS MODIFIERS, GENERAL
+=============================================================================*/
+
+/*
+	TODO: The `<var>` element needs to be added to most of the same rules as `<code>`.
+*/
+.key, .param, .return {
+	/* font-family: "consolas", "dejavu sans mono", "liberation mono", "courier new", monospace; */
+	white-space: pre;
+}
+.key>code, .param>code, .return>code,
+.key>var, .param>var, .return>var {
+	color: darkviolet;
+	font-style: normal; /* Override default `<var>` style.*/
+	font-weight: bold;
+}
+.key>em, .param>em, .return>em,
+.key>i, .param>i, .return>i {
+	/* color: dimgrey; */
+	font-weight: normal;
+	font-style: italic;
+	opacity: 0.66;
+}
+
+.list-table { margin-top: 0; }
+
+.fa-margin-left { margin-left: 0.25em; }
+.fa-margin-right { margin-right: 0.25em; }
+
+.status {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	float: right;
+	font-size: 0.83em;
+	padding: 0 0.4em;
+	white-space: nowrap;
+}
+
+.status.warn {
+	border-color: red;
+}
+
+.warn {
+	color: red;
+}
+
+.deprecated {
+	/* color: #999; */
+	opacity: 0.5;
+}
+
+/* CLASS MODIFIERS, MARKUP
+=============================================================================*/
+
+.multiline { line-height: 1.2; }
+.nobr { white-space: nowrap; }
+
+.displays h1,
+.displays h2,
+.displays h3,
+.displays h4,
+.displays h5,
+.displays h6 {
+	background-color: inherit;
+	border: none;
+	color: inherit;
+	display: block;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+.displays h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+.displays h2 {
+	font-size: 1.5em;
+	margin: 0.83em 0;
+}
+.displays h3 {
+	font-size: 1.17em;
+	margin: 1em 0;
+}
+.displays h4 {
+	font-size: 1em;
+	margin: 1.33em 0;
+}
+.displays h5 {
+	font-size: 0.83em;
+	margin: 1.67em 0;
+}
+.displays h6 {
+	font-size: 0.67em;
+	margin: 2.33em 0;
+}
+
+.displays hr {
+	display: block;
+	height: 1px;
+	border: none;
+	border-top: 1px solid #111;
+	margin: 1em 0;
+	padding: 0;
+}
+
+/* NAVIGATION
+=============================================================================*/
+
+nav {
+	border-right: 1px solid #111;
+	bottom: 0;
+	box-sizing: border-box;
+	left: 0;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	padding: 1em;
+	position: fixed;
+	top: 0;
+	width: 22.5em;
+}
+
+nav>header {
+	text-align: center;
+}
+nav>header>time {
+	font-size: 0.75rem;
+	opacity: 0.66;
+}
+nav #header-logo {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAEEklEQVR4nO3dv0ojURTH8V9EQQkJU6VObakWW6RIIYsgk9Yize6TiI8gYr3b2WdQdAu1sNhCtvUBsg8wjAbXUcw2nkXummSSuX/OSc63nMwNBz6QLvcAGqsqoQcoW6fT6QyHw30AqFQqB71erxd6pjKJBXkHsWF89EsyjDgQE2JtbQ2tVgsAcHNzg8fHR3pVJIwYkI8gdnZ20Ol0UKvVAAD39/fo9Xo4Pz8XC8MepAiEmWQYtiCzQJhJhGEHYgPCTBIMGxAXEGYSYIKD+IAw4wwTDCQEhBlHGO8gHCDMOMF4A+EIYcYBxjmIBAizkDDOQOI47gAQBWE2CgbAQZIkTmCsg8wDhJlPGGsg8whh5gOmNMgiQJi5hJkZZBEhzFzATA2iEP9nE6YwiEJMzgbMRBCFmL4yMGNB4jj+BuALoBCzNALme5IkX0edWZrwnQ0AqNfrf46OjrJut6sYU1Sr1dDtdnF8fJxFUfTn7XFj3JlJIACA7e3t1X6/j36/f/3y8pKVnnRBGg6H2dPT03WlUsHe3t5qkTOFQN6qp2navru7U5gJEcTDwwPyPG8DqBc9Ow0IpTAjKgNBzQJCKcxbNiCoMiDUwsLYhKBsgFALA+MCgrIJQs0tjEsIygUINTcwPiAolyCUWBifEJQPEEoMTAgIyicIxRYmJAQVAoRiA8MBggoJQgWD4QRBcQChvMFwhKA4gVDOYDhDUBxBKGswEiAoziDUzDCSICgJIFRhGIkQlCQQaiSMZAhqOfQAJaqnadpO0zSLoui60Wggz/MNAO3Qg5VJMghVT9O0HUVR6DmsJPEna65TEGYpCLMUhFkKwiwFYZaCMEtBmKUgzFIQZikIsxSEWQrCLAVhloIwS0GYpSDMUhBmKQizFIRZCsIsBWGWgjBLQZilIMxSEGYpCLMUhFkKwqxCIBcXFxgMBq5nmduyLMPJyUmhdyf9HeE3AAwGAxweHmJzcxOtVgvVarXsjAtRlmU4OzvD1dUV8jynx7/HnZl4Tezu7u7npaWlAwCfAGBlZYUlTLPZDD3Cv0ZA/Hx9fd0/PT39Me5s4YuUTZjl5WVsbW2xgeEAQhCXl5d4fn6mx4UgqKmvGucKExLEBgQ182X83GBCgNiEoEqvq+AC4xPEBQRlbaFLaBgfIC4hKOsrj0LBuATxAUE5WwrmG8YFiE8IyvnaPF8wNkFCQFDeFku6hrEBEhKC8r56NY7jzwCsw5QBGQUBYD9JEi8QVLDlxLZhZgHhBEEFX99tC2YaEI4QVHAQqixMERDOEBQbEGpWmHEgEiAodiDUtDAfgUiCoNiCUEVh3oNIhKDYg1CTYJrNpmgISgwI9RHM+vo6qtUqbm9vxUJQ4kAoE+ZdIiEosSDUOxhAMISmaZrA/gJLhjSn0wpo5gAAAABJRU5ErkJggg==");
+	background-repeat: no-repeat;
+	height: 100px;
+	margin: 0 auto;
+	width: 100px;
+}
+
+nav h1 {
+	background-color: transparent;
+	border: none;
+	border-radius: 0;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 15px 0 5px;
+	padding: 0;
+}
+nav h2 {
+	border: none;
+	border-bottom: 1px solid #aaa;
+	font-size: 1em;
+	padding-top: 0;
+}
+
+/* nav ul>li { display: none; } */
+nav ul, nav ol, nav li ul, nav li ol {
+	margin: 0 0 0 15px;
+}
+nav ul {
+	list-style: none;
+}
+nav>ul, nav>ol {
+	margin-left: 10px;
+}
+/* nav li {
+	margin: 2px 0;
+} */
+
+nav>hr {
+	border-top-style: dotted;
+	border-top-width: 5px;
+	margin: 30px 0;
+}
+nav>div:last-child { height: 5em; }
+
+/* MEDIA QUERIES
+=============================================================================*/
+
+/*
+	Defaults:
+		body { margin-left: 23.5em; }
+		nav { width: 22.5em; }
+*/
+@media screen and (max-width: 1280px) {
+	body { margin-left: 22em; }
+	nav { width: 21.5em; }
+}
+@media screen and (max-width: 1024px) {
+	body { margin-left: 21em; }
+	nav { width: 20.5em; }
+}
+@media screen and (max-width: 800px) {
+	body { margin: 1em; padding: 0; }
+	nav {
+		border: none;
+		box-sizing: content-box;
+		overflow: auto;
+		padding: 0;
+		position: relative;
+		width: auto;
+	}
+	nav>h2 { border: none; }
+	nav>hr { display: none; }
+	body>h1 { margin-left: -0.25em; margin-right: -0.25em; }
+}
+</style>
+</head>
+<body>
+<span id="top"></span>
+<!-- ******************************************************************************************* -->
+<!-- ***********************************************************************************************
+	<<audioloopto>> macro set for SugarCube 2.x
+************************************************************************************************ -->
+<p><span id="top"></span></p>
+<h1 id="introduction"><code>&lt;&lt;audioloopto&gt;&gt;</code> macro set for SugarCube 2.x</h1>
+<p>This documentation is a reference for the <code>&lt;&lt;audioloopto&gt;&gt;</code> macro set for SugarCube, it assumes at least a passing knowledge of <a href="http://www.motoslave.net/sugarcube/2/docs/#macros">SugarCube macros</a>.</p>
+<p><a href="http://www.motoslave.net/sugarcube/">SugarCube</a> is a free (gratis and libre) story format for <a href="http://twinery.org/">Twine/Twee</a>.</p>
+<!-- ***************************************************************************
+	Table of Contents
+**************************************************************************** -->
+<nav role="navigation">
+<header role="banner">
+<div id="header-logo"></div>
+<h1><code>&lt;&lt;audioloopto&gt;&gt;</code> macro set</h1>
+<time datetime="2019-12-19T00:00:11Z">2019-12-19</time>
+</header>
+<h2><a href="#requirements">Requirements</a></h2>
+<h2><a href="#contents">Contents</a></h2>
+<h2><a href="#installation">Installation</a></h2>
+<h2><a href="#macros">Macros</a></h2>
+<ul>
+<li><a href="#macros-macro-audioloopto"><code>&lt;&lt;audioloopto&gt;&gt;</code></a></li>
+<li><a href="#macros-macro-audiounloopto"><code>&lt;&lt;audiounloopto&gt;&gt;</code></a></li>
+</ul>
+<div>&nbsp;</div>
+</nav>
+<!-- ***************************************************************************
+	Requirements
+**************************************************************************** -->
+<p><span id="requirements"></span></p>
+<h2>Requirements</h2>
+<p>This package requires SugarCube v2.28.0 or greater.</p>
+<!-- ***************************************************************************
+	Contents
+**************************************************************************** -->
+<p><span id="contents"></span></p>
+<h2>Contents</h2>
+<p>The files included in this package are:</p>
+<ul>
+<li><strong><code>README.html</code>:</strong> This document.</li>
+<li><strong><code>audioloopto-macro-set.min.js</code>:</strong> The, minified, macros.</li>
+</ul>
+<!-- ***************************************************************************
+	Installation
+**************************************************************************** -->
+<p><span id="installation"></span></p>
+<h2>Installation</h2>
+<h3>JavaScript</h3>
+<ol>
+<li>Open the <code>audioloopto-macro-set.min.js</code> file in a text editor (<em>not</em> a word processor) and copy its contents.</li>
+<li>Paste them into your project's script section (Twine 2: Story JavaScript, Twine 1: <code>script</code>-tagged passage).</li>
+</ol>
+<!-- ***************************************************************************
+	Macros
+**************************************************************************** -->
+<p><span id="macros"></span></p>
+<h2>Macros</h2>
+<p><span id="macros-macro-audioloopto"></span></p>
+<h3><code>&lt;&lt;audioloopto loopTrackId passageName nextTrackId&gt;&gt;</code></h3>
+<p>Sets the base audio track to repeat playback upon ending normally, unless the player is currently visiting the specified passage, in which case the next track is played instead.  Requires audio tracks to be set up via SugarCube's audio subsystem, either with the <a href="http://www.motoslave.net/sugarcube/2/docs/#macros-macro-cacheaudio"><code>&lt;&lt;cacheaudio&gt;&gt;</code> macro</a> or the <a href="http://www.motoslave.net/sugarcube/2/docs/#simpleaudio-api-method-tracks-add"><code>SimpleAudio.tracks.add()</code> API</a>.</p>
+<p role="note" class="warning"><b>Warning:</b>
+This macro should only be used when you need to transition from a looping track to a different track.  Do <em>not</em> use it simply to loop tracks.  If looping a track is all you need, use the <code>loop</code> action of the <a href="http://www.motoslave.net/sugarcube/2/docs/#macros-macro-audio"><code>&lt;&lt;audio&gt;&gt;</code> macro</a>.
+</p>
+<h4>Arguments:</h4>
+<ul>
+<li><strong>loopTrackId:</strong> The ID of the audio track to loop.</li>
+<li><strong>passageName:</strong> The name of the passage that, upon the normal end of the looped track, enables the transition to the next track.</li>
+<li><strong>nextTrackId:</strong> The ID of the audio track to transition over to if the looped track ends normally upon the specified passage.</li>
+</ul>
+<h4>Example:</h4>
+<pre><code>→ Loop &quot;lowlandsPiano&quot; until it ends upon the &quot;Highland Meadow&quot; passage, then play &quot;highlandsPiano&quot; instead.
+&lt;&lt;audioloopto &quot;lowlandsPiano&quot; &quot;Highland Meadow&quot; &quot;highlandsPiano&quot;&gt;&gt;
+</code></pre>
+<!-- *********************************************************************** -->
+<p><span id="macros-macro-audiounloopto"></span></p>
+<h3><code>&lt;&lt;audiounloopto loopTrackId [passageName]&gt;&gt;</code></h3>
+<p>Removes transitions for the specified audio track and, if no transitions remain, sets the track to not repeat playback.</p>
+<p role="note"><b>Note:</b>
+This macro only removes loops and transitions that were set up via the <a href="#macros-macro-audioloopto"><code>&lt;&lt;audioloopto&gt;&gt;</code> macro</a>.
+</p>
+<h4>Arguments:</h4>
+<ul>
+<li><strong>loopTrackId:</strong> The ID of the audio track whose transition(s) should be removed and, if none remain, unloop.</li>
+<li><strong>passageName:</strong> (optional) The name of the passage whose transition should be removed.  If no passage name is given, removes all transitions.</li>
+</ul>
+<h4>Example:</h4>
+<pre><code>→ Remove the &quot;lowlandsPiano&quot; transition for the &quot;Highland Meadow&quot; passage, unlooping it if no transitions remain.
+&lt;&lt;audiounloopto &quot;lowlandsPiano&quot; &quot;Highland Meadow&quot;&gt;&gt;
+
+→ Remove all &quot;lowlandsPiano&quot; transitions and unloop it.
+&lt;&lt;audiounloopto &quot;lowlandsPiano&quot;&gt;&gt;
+</code></pre>
+<!-- *********************************************************************** -->
+<br>
+<!-- ******************************************************************************************* -->
+<div>&nbsp;</div>
+</body>
+</html>

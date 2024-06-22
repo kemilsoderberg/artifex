@@ -1,0 +1,50 @@
+:: StoryData
+{
+    "ifid": "A315FCE2-274E-4071-9F61-5EE4D3D26372",
+    "format": "SugarCube",
+    "format-version": "2"
+}
+
+:: StoryTitle
+Artifex Pyrophilis
+
+:: StoryCaption
+<<if $dayIndex > -1>>
+    <<if $timeIndex is 0>>
+        <img src="morning.png" style="max-width: 250px;">
+    <<elseif $timeIndex is 1>>
+        <img src="noon.png" style="max-width: 250px;">
+    <<elseif $timeIndex is 2>>
+        <img src="evening.png" style="max-width: 250px;">
+    <<elseif $timeIndex is 3>>
+        <img src="night.jpg" style="max-width: 250px;">
+    <</if>>
+
+
+    Time of day: <<print $time[$timeIndex]>>
+    Day $dayIndex
+
+    You are <<print $health[$healthIndex]>>
+    <a href="#" id="characterLink">Character</a>
+    <a href="#" id="inventoryLink">Inventory</a>
+<</if>>
+
+:: Start
+Set your name, pronouns, formal title and auxilliary verb (e.g. They 'are', she 'is')
+First Name:
+<<textbox "$first_name" "Berepert">>
+Last Name:
+<<textbox "$last_name" "Leinorta">>
+Pronouns:
+<<textbox "$pnS" "They">> <<textbox "$pnO" "Them">> 
+Title:
+<<textbox "$formal" "Sir">>
+Auxilliary verb:
+<<textbox "$aux" "are">>
+
+<<button "Submit" "Crash">><</button>>
+<<set $time to ["morning", "noon", "evening", "night"]>>
+<<set $health to ["dying", "wounded", "bruised", "fine", "good", "divine"]>>
+<<set $healthIndex to 0>>
+<<set $timeIndex to 0>>
+<<set $dayIndex to -1>>
