@@ -16,14 +16,15 @@ if (typeof State.variables.inventory === 'undefined') {
 
 // Add items to the inventory
 State.variables.addInitialItems = function() {
-    addItemToInventory(1, "Helmet", "Armor", ["head"]);
-    addItemToInventory(2, "Sword", "Weapon", ["right-hand"]);
-    addItemToInventory(3, "Shield", "Armor", ["left-hand"]);
-    addItemToInventory(4, "Boots", "Armor", ["feet"]);
-    addItemToInventory(5, "Ring", "Accessory", ["accessory"]);
-    addItemToInventory(6, "Amulet", "Accessory", ["accessory"]);
-    addItemToInventory(7, "Health Potion", "Consumable", []);
-    addItemToInventory(8, "Mana Potion", "Consumable", []);
+    addItemToInventory(1, "Helmet", "head", ["Protection +5"], "images/items/helmet.png");
+    addItemToInventory(2, "Sword", "right-hand", ["Damage +10"], "images/items/sword.png");
+    addItemToInventory(3, "Shield", "left-hand", ["Defense +8"], "images/items/shield.png");
+    addItemToInventory(4, "Boots", "feet", ["Speed +2"], "images/items/boots.png");
+    addItemToInventory(5, "Ring", "accessory", ["Magic +3"], "images/items/ring.png");
+    addItemToInventory(6, "Amulet", "accessory", ["Health +5"], "images/items/amulet.png");
+    addItemToInventory(7, "Shirt", "chest", ["Stylish"], "images/items/shirt.png");
+    addItemToInventory(8, "Pants", "legs", ["Stylish"], "images/items/pants.png");
+    addItemToInventory(9, "Backpack", "accessory", ["Inventory!"], "images/items/backpack.png");
 };
 
 // Call this function to add initial items
@@ -33,13 +34,13 @@ State.variables.addInitialItems();
 :: StoryCaption
 <<if $dayIndex > -1>>
     <<if $timeIndex is 0>>
-        <img src="morning.png" style="max-width: 250px;">
+        <img src="images/morning.png" style="max-width: 250px;">
     <<elseif $timeIndex is 1>>
-        <img src="noon.png" style="max-width: 250px;">
+        <img src="images/noon.png" style="max-width: 250px;">
     <<elseif $timeIndex is 2>>
-        <img src="evening.png" style="max-width: 250px;">
+        <img src="images/evening.png" style="max-width: 250px;">
     <<elseif $timeIndex is 3>>
-        <img src="night.jpg" style="max-width: 250px;">
+        <img src="images/night.jpg" style="max-width: 250px;">
     <</if>>
 
 

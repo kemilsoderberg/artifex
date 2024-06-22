@@ -12,7 +12,7 @@ $('body').on('click', '#characterLink', function(ev) {
   const popupContent = `
     <div id="popup">
       <div id="popup-content">
-        <img src="profile.jpeg" style="max-width: 250px;">
+        <img src="images/profile.jpeg" style="max-width: 250px;">
         <h2>Character Information</h2>
         <p>${formal} ${first_name} ${last_name}</p>
         <p>${pnS}/${pnO}</p>

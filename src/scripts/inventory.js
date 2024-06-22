@@ -5,16 +5,21 @@ if (typeof State.variables.inventory === 'undefined') {
 
 // Define the Item class
 window.Item = class Item {
-    constructor(id, name, type, attributes) {
+    constructor(id, name, slot, attributes, image) {
         this.id = id;
         this.name = name;
-        this.type = type;
+        this.slot = slot;
         this.attributes = attributes;
+        this.image = image;
         this.equipped = false;
     }
 
     getDescription() {
-        return `${this.name} (${this.type})`;
+        return `${this.name}\n${this.attributes.map(attr => `• ${attr}`).join('\n')}`;
+    }
+
+    getAttributes() {
+        return this.attributes.join(', ');
     }
 
     hasAttribute(attr) {
@@ -37,7 +42,7 @@ window.Item = class Item {
     }
 
     use() {
-        if (this.type === 'Consumable') {
+        if (this.slot === 'consumable') {
             // Implement the effect of using the consumable here
             console.log(`Used ${this.name}`);
             return true; // Return true if the item was successfully used
@@ -47,8 +52,8 @@ window.Item = class Item {
 };
 
 // Function to add an item to the inventory
-window.addItemToInventory = function(id, name, type, attributes) {
-    const newItem = new Item(id, name, type, attributes);
+window.addItemToInventory = function(id, name, slot, attributes, image) {
+    const newItem = new Item(id, name, slot, attributes, image);
     State.variables.inventory.push(newItem);
 };
 
@@ -57,9 +62,12 @@ window.updateInventoryDisplay = function() {
     const slots = ['head', 'left-hand', 'chest', 'right-hand', 'legs', 'feet', 'accessory1', 'accessory2', 'accessory3'];
     
     for (let slot of slots) {
-        let item = State.variables.inventory.find(i => i.hasAttribute(slot) && i.equipped);
+        let item = State.variables.inventory.find(i => i.slot === slot && i.equipped);
         let slotContent = item 
-            ? `<div class="equipped-item">${item.getDescription()} <button class="unequip-btn" data-id="${item.id}">Unequip</button></div>`
+            ? `<div class="equipped-item" title="${item.getDescription()}">
+                <img src="${item.image}" alt="${item.name}">
+                <button class="unequip-btn" data-id="${item.id}">Unequip</button>
+               </div>`
             : 'Empty';
         $(`.slot.${slot}`).html(slotContent);
     }
@@ -67,10 +75,14 @@ window.updateInventoryDisplay = function() {
     let generalInventory = '<ul>';
     for (let item of State.variables.inventory) {
         if (!item.equipped) {
-            let actionButton = item.type === 'Consumable' 
+            let actionButton = item.slot === 'consumable' 
                 ? `<button class="use-btn" data-id="${item.id}">Use</button>`
                 : `<button class="equip-btn" data-id="${item.id}">Equip</button>`;
-            generalInventory += `<li>${item.getDescription()} ${actionButton}</li>`;
+            generalInventory += `<li title="${item.getDescription()}">
+                                    <img src="${item.image}" alt="${item.name}"> 
+                                    ${item.name} 
+                                    ${actionButton}
+                                 </li>`;
         }
     }
     generalInventory += '</ul>';
@@ -125,24 +137,22 @@ $(document).on('click', '.equip-btn', function() {
     let item = State.variables.inventory.find(i => i.id === itemId);
     if (item) {
         // Check if the item is an accessory and find the first empty accessory slot
-        if (item.hasAttribute('accessory')) {
+        if (item.slot.startsWith('accessory')) {
             const accessorySlots = ['accessory1', 'accessory2', 'accessory3'];
             let slotToEquip = accessorySlots.find(slot => {
-                return !State.variables.inventory.some(i => i.hasAttribute(slot) && i.equipped);
+                return !State.variables.inventory.some(i => i.slot === slot && i.equipped);
             });
             if (slotToEquip) {
-                item.attributes = [slotToEquip]; // Update the item's attributes to the first empty slot
+                item.slot = slotToEquip; // Update the item's slot to the first empty slot
             }
         } else {
             // Unequip any item in the same slot
-            let slotToEquip = item.attributes.find(attr => ['head', 'left-hand', 'chest', 'right-hand', 'legs', 'feet'].includes(attr));
-            if (slotToEquip) {
-                State.variables.inventory.forEach(i => {
-                    if (i.hasAttribute(slotToEquip) && i.equipped) {
-                        i.unequip();
-                    }
-                });
-            }
+            let slotToEquip = item.slot;
+            State.variables.inventory.forEach(i => {
+                if (i.slot === slotToEquip && i.equipped) {
+                    i.unequip();
+                }
+            });
         }
         item.equip();
         // Refresh the inventory display

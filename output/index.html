@@ -118,9 +118,12 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
   padding: 20px;
   border-radius: 5px;
   text-align: center;
-  max-width: 80%;
-  max-height: 80%;
+  width: 90%; /* Changed from max-width to width */
+  max-width: 1200px; /* Added a max-width to prevent it from getting too wide on large screens */
+  height: 90%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .inventory-grid {
@@ -131,14 +134,28 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
       ". legs ."
       ". feet ."
       "accessory1 accessory2 accessory3";
-  gap: 10px;
+  gap: 20px;
   margin-bottom: 20px;
+  justify-content: center;
 }
 
 .slot {
   border: 1px solid #fff;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
+  width: 120px; /* Increased width slightly */
+  height: 140px; /* Increased height slightly */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slot img {
+  max-width: 80%;
+  max-height: 70%;
+  object-fit: contain;
 }
 
 .slot.head { grid-area: head; }
@@ -153,32 +170,87 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 
 .general-inventory {
   text-align: left;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .general-inventory ul {
   list-style-type: none;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
 }
 
 .general-inventory li {
-  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.general-inventory li img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-right: 10px;
 }
 
 .equipped-item {
-  background-color: #4CAF50;
-  color: white;
-  padding: 5px;
-  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
 }
 
 .equip-btn, .unequip-btn, .use-btn {
-  margin-left: 10px;
   padding: 2px 5px;
   background-color: #008CBA;
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  margin-top: 5px; /* Add some space above the button */
+}
+
+[title] {
+  position: relative;
+  cursor: help;
+}
+
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+  white-space: pre-wrap;
+  text-align: left;
+  z-index: 1000;
+  font-size: 14px;
+  line-height: 1.4;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+[title]:hover::after {
+  content: attr(title);
+  display: block;
+}
+
+[title]:hover::first-line {
+  font-weight: bold;
+  border-bottom: 1px solid white;
+  padding-bottom: 3px;
+  margin-bottom: 3px;
 }
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "characterpopup.js" */
 // Listen for click event on the "Character" link using event delegation
@@ -195,7 +267,7 @@ $('body').on('click', '#characterLink', function(ev) {
   const popupContent = `
     <div id="popup">
       <div id="popup-content">
-        <img src="profile.jpeg" style="max-width: 250px;">
+        <img src="images/profile.jpeg" style="max-width: 250px;">
         <h2>Character Information</h2>
         <p>${formal} ${first_name} ${last_name}</p>
         <p>${pnS}/${pnO}</p>
@@ -218,16 +290,21 @@ if (typeof State.variables.inventory === 'undefined') {
 
 // Define the Item class
 window.Item = class Item {
-    constructor(id, name, type, attributes) {
+    constructor(id, name, slot, attributes, image) {
         this.id = id;
         this.name = name;
-        this.type = type;
+        this.slot = slot;
         this.attributes = attributes;
+        this.image = image;
         this.equipped = false;
     }
 
     getDescription() {
-        return `${this.name} (${this.type})`;
+        return `${this.name}\n${this.attributes.map(attr => `• ${attr}`).join('\n')}`;
+    }
+
+    getAttributes() {
+        return this.attributes.join(', ');
     }
 
     hasAttribute(attr) {
@@ -250,7 +327,7 @@ window.Item = class Item {
     }
 
     use() {
-        if (this.type === 'Consumable') {
+        if (this.slot === 'consumable') {
             // Implement the effect of using the consumable here
             console.log(`Used ${this.name}`);
             return true; // Return true if the item was successfully used
@@ -260,8 +337,8 @@ window.Item = class Item {
 };
 
 // Function to add an item to the inventory
-window.addItemToInventory = function(id, name, type, attributes) {
-    const newItem = new Item(id, name, type, attributes);
+window.addItemToInventory = function(id, name, slot, attributes, image) {
+    const newItem = new Item(id, name, slot, attributes, image);
     State.variables.inventory.push(newItem);
 };
 
@@ -270,9 +347,12 @@ window.updateInventoryDisplay = function() {
     const slots = ['head', 'left-hand', 'chest', 'right-hand', 'legs', 'feet', 'accessory1', 'accessory2', 'accessory3'];
     
     for (let slot of slots) {
-        let item = State.variables.inventory.find(i => i.hasAttribute(slot) && i.equipped);
+        let item = State.variables.inventory.find(i => i.slot === slot && i.equipped);
         let slotContent = item 
-            ? `<div class="equipped-item">${item.getDescription()} <button class="unequip-btn" data-id="${item.id}">Unequip</button></div>`
+            ? `<div class="equipped-item" title="${item.getDescription()}">
+                <img src="${item.image}" alt="${item.name}">
+                <button class="unequip-btn" data-id="${item.id}">Unequip</button>
+               </div>`
             : 'Empty';
         $(`.slot.${slot}`).html(slotContent);
     }
@@ -280,10 +360,14 @@ window.updateInventoryDisplay = function() {
     let generalInventory = '<ul>';
     for (let item of State.variables.inventory) {
         if (!item.equipped) {
-            let actionButton = item.type === 'Consumable' 
+            let actionButton = item.slot === 'consumable' 
                 ? `<button class="use-btn" data-id="${item.id}">Use</button>`
                 : `<button class="equip-btn" data-id="${item.id}">Equip</button>`;
-            generalInventory += `<li>${item.getDescription()} ${actionButton}</li>`;
+            generalInventory += `<li title="${item.getDescription()}">
+                                    <img src="${item.image}" alt="${item.name}"> 
+                                    ${item.name} 
+                                    ${actionButton}
+                                 </li>`;
         }
     }
     generalInventory += '</ul>';
@@ -338,24 +422,22 @@ $(document).on('click', '.equip-btn', function() {
     let item = State.variables.inventory.find(i => i.id === itemId);
     if (item) {
         // Check if the item is an accessory and find the first empty accessory slot
-        if (item.hasAttribute('accessory')) {
+        if (item.slot.startsWith('accessory')) {
             const accessorySlots = ['accessory1', 'accessory2', 'accessory3'];
             let slotToEquip = accessorySlots.find(slot => {
-                return !State.variables.inventory.some(i => i.hasAttribute(slot) && i.equipped);
+                return !State.variables.inventory.some(i => i.slot === slot && i.equipped);
             });
             if (slotToEquip) {
-                item.attributes = [slotToEquip]; // Update the item's attributes to the first empty slot
+                item.slot = slotToEquip; // Update the item's slot to the first empty slot
             }
         } else {
             // Unequip any item in the same slot
-            let slotToEquip = item.attributes.find(attr => ['head', 'left-hand', 'chest', 'right-hand', 'legs', 'feet'].includes(attr));
-            if (slotToEquip) {
-                State.variables.inventory.forEach(i => {
-                    if (i.hasAttribute(slotToEquip) && i.equipped) {
-                        i.unequip();
-                    }
-                });
-            }
+            let slotToEquip = item.slot;
+            State.variables.inventory.forEach(i => {
+                if (i.slot === slotToEquip && i.equipped) {
+                    i.unequip();
+                }
+            });
         }
         item.equip();
         // Refresh the inventory display
@@ -435,27 +517,28 @@ if (typeof State.variables.inventory === &#39;undefined&#39;) {
 
 // Add items to the inventory
 State.variables.addInitialItems = function() {
-    addItemToInventory(1, &quot;Helmet&quot;, &quot;Armor&quot;, [&quot;head&quot;]);
-    addItemToInventory(2, &quot;Sword&quot;, &quot;Weapon&quot;, [&quot;right-hand&quot;]);
-    addItemToInventory(3, &quot;Shield&quot;, &quot;Armor&quot;, [&quot;left-hand&quot;]);
-    addItemToInventory(4, &quot;Boots&quot;, &quot;Armor&quot;, [&quot;feet&quot;]);
-    addItemToInventory(5, &quot;Ring&quot;, &quot;Accessory&quot;, [&quot;accessory&quot;]);
-    addItemToInventory(6, &quot;Amulet&quot;, &quot;Accessory&quot;, [&quot;accessory&quot;]);
-    addItemToInventory(7, &quot;Health Potion&quot;, &quot;Consumable&quot;, []);
-    addItemToInventory(8, &quot;Mana Potion&quot;, &quot;Consumable&quot;, []);
+    addItemToInventory(1, &quot;Helmet&quot;, &quot;head&quot;, [&quot;Protection +5&quot;], &quot;images/items/helmet.png&quot;);
+    addItemToInventory(2, &quot;Sword&quot;, &quot;right-hand&quot;, [&quot;Damage +10&quot;], &quot;images/items/sword.png&quot;);
+    addItemToInventory(3, &quot;Shield&quot;, &quot;left-hand&quot;, [&quot;Defense +8&quot;], &quot;images/items/shield.png&quot;);
+    addItemToInventory(4, &quot;Boots&quot;, &quot;feet&quot;, [&quot;Speed +2&quot;], &quot;images/items/boots.png&quot;);
+    addItemToInventory(5, &quot;Ring&quot;, &quot;accessory&quot;, [&quot;Magic +3&quot;], &quot;images/items/ring.png&quot;);
+    addItemToInventory(6, &quot;Amulet&quot;, &quot;accessory&quot;, [&quot;Health +5&quot;], &quot;images/items/amulet.png&quot;);
+    addItemToInventory(7, &quot;Shirt&quot;, &quot;chest&quot;, [&quot;Stylish&quot;], &quot;images/items/shirt.png&quot;);
+    addItemToInventory(8, &quot;Pants&quot;, &quot;legs&quot;, [&quot;Stylish&quot;], &quot;images/items/pants.png&quot;);
+    addItemToInventory(9, &quot;Backpack&quot;, &quot;accessory&quot;, [&quot;Inventory!&quot;], &quot;images/items/backpack.png&quot;);
 };
 
 // Call this function to add initial items
 State.variables.addInitialItems();
 &lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="StoryCaption" tags="" position="975,100" size="100,100">&lt;&lt;if $dayIndex &gt; -1&gt;&gt;
     &lt;&lt;if $timeIndex is 0&gt;&gt;
-        &lt;img src=&quot;morning.png&quot; style=&quot;max-width: 250px;&quot;&gt;
+        &lt;img src=&quot;images/morning.png&quot; style=&quot;max-width: 250px;&quot;&gt;
     &lt;&lt;elseif $timeIndex is 1&gt;&gt;
-        &lt;img src=&quot;noon.png&quot; style=&quot;max-width: 250px;&quot;&gt;
+        &lt;img src=&quot;images/noon.png&quot; style=&quot;max-width: 250px;&quot;&gt;
     &lt;&lt;elseif $timeIndex is 2&gt;&gt;
-        &lt;img src=&quot;evening.png&quot; style=&quot;max-width: 250px;&quot;&gt;
+        &lt;img src=&quot;images/evening.png&quot; style=&quot;max-width: 250px;&quot;&gt;
     &lt;&lt;elseif $timeIndex is 3&gt;&gt;
-        &lt;img src=&quot;night.jpg&quot; style=&quot;max-width: 250px;&quot;&gt;
+        &lt;img src=&quot;images/night.jpg&quot; style=&quot;max-width: 250px;&quot;&gt;
     &lt;&lt;/if&gt;&gt;
 
 
