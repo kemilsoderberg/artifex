@@ -100,37 +100,69 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 		<div id="init-lacking">Your browser lacks required capabilities. Please upgrade it or switch to another to continue.</div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://A315FCE2-274E-4071-9F61-5EE4D3D26372// --><tw-storydata name="Artifex Pyrophilis" startnode="9" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="A315FCE2-274E-4071-9F61-5EE4D3D26372" zoom="1" format="SugarCube" format-version="2.30.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">#popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-  
+	<!-- UUID://A315FCE2-274E-4071-9F61-5EE4D3D26372// --><tw-storydata name="Artifex Pyrophilis" startnode="8" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="A315FCE2-274E-4071-9F61-5EE4D3D26372" zoom="1" format="SugarCube" format-version="2.30.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">#popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
 #popup-content {
   background-color: black;
   padding: 20px;
   border-radius: 5px;
   text-align: center;
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
 }
 
-.inventory, .equipment {
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
+.inventory-grid {
+  display: grid;
+  grid-template-areas:
+      "head head"
+      "chest chest"
+      "hands hands"
+      "legs legs"
+      "feet feet"
+      "weapon offhand"
+      "accessory accessory";
+  gap: 10px;
+  margin-bottom: 20px;
 }
-.slot, .inventory-item {
-    border: 1px solid #000;
-    padding: 10px;
-    margin: 5px;
-    width: 150px;
-    text-align: center;
+
+.slot {
+  border: 1px solid #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.slot.head { grid-area: head; }
+.slot.chest { grid-area: chest; }
+.slot.hands { grid-area: hands; }
+.slot.legs { grid-area: legs; }
+.slot.feet { grid-area: feet; }
+.slot.weapon { grid-area: weapon; }
+.slot.offhand { grid-area: offhand; }
+.slot.accessory { grid-area: accessory; }
+
+.general-inventory {
+  text-align: left;
+}
+
+.general-inventory ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.general-inventory li {
+  margin-bottom: 5px;
 }
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "characterpopup.js" */
 // Listen for click event on the "Character" link using event delegation
@@ -172,31 +204,59 @@ window.Item = class Item {
     }
 
     getDescription() {
-        return `${this.name} (${this.type}): ${JSON.stringify(this.attributes)}`;
+        return `${this.name} (${this.type})`;
+    }
+
+    hasAttribute(attr) {
+        if (Array.isArray(this.attributes)) {
+            return this.attributes.includes(attr);
+        } else if (typeof this.attributes === 'string') {
+            return this.attributes === attr;
+        } else if (typeof this.attributes === 'object' && this.attributes !== null) {
+            return attr in this.attributes;
+        }
+        return false;
     }
 };
 
 $(document).on('click', '#inventoryLink', function(ev) {
-    ev.preventDefault(); // Prevent default link behavior
+    ev.preventDefault();
 
-    // Ensure the inventory is defined
     if (typeof State.variables.inventory === 'undefined') {
         console.error('Inventory is undefined');
         return;
     }
 
-    // Generate inventory content
-    let inventoryContent = '<ul>';
-    for (let item of State.variables.inventory) {
-        inventoryContent += `<li>${item.getDescription()}</li>`;
+    // Define the grid slots
+    const slots = ['head', 'chest', 'hands', 'legs', 'feet', 'weapon', 'offhand', 'accessory'];
+    
+    // Generate inventory grid content
+    let inventoryGrid = '';
+    for (let slot of slots) {
+        let item = State.variables.inventory.find(i => i.hasAttribute(slot));
+        inventoryGrid += `
+            <div class="slot ${slot}">
+                <h3>${slot.charAt(0).toUpperCase() + slot.slice(1)}</h3>
+                ${item ? item.getDescription() : 'Empty'}
+            </div>
+        `;
     }
-    inventoryContent += '</ul>';
+
+    // Generate general inventory content for items without specific slots
+    let generalInventory = '<h3>Other Items</h3><ul>';
+    for (let item of State.variables.inventory) {
+        if (!slots.some(slot => item.hasAttribute(slot))) {
+            generalInventory += `<li>${item.getDescription()}</li>`;
+        }
+    }
+    generalInventory += '</ul>';
 
     const popupContent = `
       <div id="popup">
         <div id="popup-content">
           <h2>INVENTORY</h2>
-          <div id="inventory" class="inventory">${inventoryContent}</div>
+          <div id="inventory-grid" class="inventory-grid">${inventoryGrid}</div>
+          <div id="general-inventory" class="general-inventory">${generalInventory}</div>
           <button id="close-popup">Close</button>
         </div>
       </div>
@@ -219,14 +279,8 @@ The sun is setting, casting a warm glow over the camp.
 The fire is warm, and the stars are bright.
 &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;set $sword = new Item(1, &quot;Sword&quot;, &quot;weapon&quot;, { attack: 10, weight: 5 })&gt;&gt;
-&lt;&lt;set $shield = new Item(2, &quot;Shield&quot;, &quot;armor&quot;, { defense: 15, weight: 10 })&gt;&gt;
-&lt;&lt;set $inventory = [$sword, $shield]&gt;&gt;
-
-&lt;&lt;link &quot;Check your items&quot;&gt;&gt;
-    &lt;&lt;goto &quot;Inventory&quot;&gt;&gt;
-&lt;&lt;/link&gt;&gt;
-
+&lt;&lt;set $helmet = new Item(1, &quot;Helmet&quot;, &quot;Armor&quot;, [&quot;head&quot;, &quot;protection&quot;], {defense: 5})&gt;&gt;
+&lt;&lt;set $inventory = [$helmet]&gt;&gt;
 
 [[Sleep]]
 [[Work]]
@@ -243,17 +297,15 @@ The fire is warm, and the stars are bright.
 [[Explore around the camp site]]
 &lt;&lt;if $exploration &gt; 0 &gt;&gt;
     [[Explore in the forest]]
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="Inventory" tags="" position="600,100" size="100,100">Your items:
-* Sword: &lt;&lt;= $sword.getDescription()&gt;&gt;
-* Shield: &lt;&lt;= $shield.getDescription()&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="Crash" tags="" position="725,100" size="100,100">You awaken in a smoldering crater, the aftermath of your own catastrophic descent. 
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="Crash" tags="" position="600,100" size="100,100">You awaken in a smoldering crater, the aftermath of your own catastrophic descent. 
 The air is thick with the scent of scorched earth and the acrid tang of burnt metal. 
 Every fiber of your being throbs with a relentless, all-encompassing pain, as if the very essence of your existence has been shattered and reassembled in the most agonizing manner possible.
 
-[[Look around]]</tw-passagedata><tw-passagedata pid="7" name="Look around" tags="" position="850,100" size="100,100">As your eyes adjust to the dim light filtering through the dust and debris, you notice a section of the crater&#39;s edge that appears slightly less treacherous. 
+[[Look around]]</tw-passagedata><tw-passagedata pid="6" name="Look around" tags="" position="725,100" size="100,100">As your eyes adjust to the dim light filtering through the dust and debris, you notice a section of the crater&#39;s edge that appears slightly less treacherous. 
 The incline there is gentler, offering a potential escape from this desolate pit. The surrounding landscape is a bleak expanse, but that one spot might just be your way out.
 
 [[Climb|Camp][$dayIndex to 0]]
-[[Go back|Crash]]</tw-passagedata><tw-passagedata pid="8" name="StoryCaption" tags="" position="975,100" size="100,100">&lt;&lt;if $dayIndex &gt; -1&gt;&gt;
+[[Go back|Crash]]</tw-passagedata><tw-passagedata pid="7" name="StoryCaption" tags="" position="850,100" size="100,100">&lt;&lt;if $dayIndex &gt; -1&gt;&gt;
     &lt;&lt;if $timeIndex is 0&gt;&gt;
         &lt;img src=&quot;morning.png&quot; style=&quot;max-width: 250px;&quot;&gt;
     &lt;&lt;elseif $timeIndex is 1&gt;&gt;
@@ -271,7 +323,7 @@ The incline there is gentler, offering a potential escape from this desolate pit
     You are &lt;&lt;print $health[$healthIndex]&gt;&gt;
     &lt;a href=&quot;#&quot; id=&quot;characterLink&quot;&gt;Character&lt;/a&gt;
     &lt;a href=&quot;#&quot; id=&quot;inventoryLink&quot;&gt;Inventory&lt;/a&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="Start" tags="" position="1100,100" size="100,100">Set your name, pronouns, formal title and auxilliary verb (e.g. They &#39;are&#39;, she &#39;is&#39;)
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="Start" tags="" position="975,100" size="100,100">Set your name, pronouns, formal title and auxilliary verb (e.g. They &#39;are&#39;, she &#39;is&#39;)
 First Name:
 &lt;&lt;textbox &quot;$first_name&quot; &quot;Berepert&quot;&gt;&gt;
 Last Name:

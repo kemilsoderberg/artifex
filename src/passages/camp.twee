@@ -10,14 +10,8 @@ The sun is setting, casting a warm glow over the camp.
 The fire is warm, and the stars are bright.
 <</if>>
 
-<<set $sword = new Item(1, "Sword", "weapon", { attack: 10, weight: 5 })>>
-<<set $shield = new Item(2, "Shield", "armor", { defense: 15, weight: 10 })>>
-<<set $inventory = [$sword, $shield]>>
-
-<<link "Check your items">>
-    <<goto "Inventory">>
-<</link>>
-
+<<set $helmet = new Item(1, "Helmet", "Armor", ["head", "protection"], {defense: 5})>>
+<<set $inventory = [$helmet]>>
 
 [[Sleep]]
 [[Work]]
@@ -45,9 +39,3 @@ Time to explore!
 <<if $exploration > 0 >>
     [[Explore in the forest]]
 <</if>>
-
-
-:: Inventory
-Your items:
-* Sword: <<= $sword.getDescription()>>
-* Shield: <<= $shield.getDescription()>>
