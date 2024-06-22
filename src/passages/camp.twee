@@ -10,9 +10,6 @@ The sun is setting, casting a warm glow over the camp.
 The fire is warm, and the stars are bright.
 <</if>>
 
-<<set $helmet = new Item(1, "Helmet", "Armor", ["head", "protection"], {defense: 5})>>
-<<set $inventory = [$helmet]>>
-
 [[Sleep]]
 [[Work]]
 [[Explore]]

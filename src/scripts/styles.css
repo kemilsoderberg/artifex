@@ -61,3 +61,20 @@
 .general-inventory li {
   margin-bottom: 5px;
 }
+
+.equipped-item {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.equip-btn, .unequip-btn, .use-btn {
+  margin-left: 10px;
+  padding: 2px 5px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}

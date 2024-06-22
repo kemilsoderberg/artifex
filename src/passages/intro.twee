@@ -8,6 +8,28 @@
 :: StoryTitle
 Artifex Pyrophilis
 
+:: StoryInit
+<<script>>
+if (typeof State.variables.inventory === 'undefined') {
+    State.variables.inventory = [];
+}
+
+// Add items to the inventory
+State.variables.addInitialItems = function() {
+    addItemToInventory(1, "Helmet", "Armor", ["head"]);
+    addItemToInventory(2, "Sword", "Weapon", ["right-hand"]);
+    addItemToInventory(3, "Shield", "Armor", ["left-hand"]);
+    addItemToInventory(4, "Boots", "Armor", ["feet"]);
+    addItemToInventory(5, "Ring", "Accessory", ["accessory"]);
+    addItemToInventory(6, "Amulet", "Accessory", ["accessory"]);
+    addItemToInventory(7, "Health Potion", "Consumable", []);
+    addItemToInventory(8, "Mana Potion", "Consumable", []);
+};
+
+// Call this function to add initial items
+State.variables.addInitialItems();
+<</script>>
+
 :: StoryCaption
 <<if $dayIndex > -1>>
     <<if $timeIndex is 0>>
