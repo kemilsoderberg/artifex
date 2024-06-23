@@ -1,5 +1,4 @@
 // Listen for click event on the "Character" link using event delegation
-// <p>The current time is: ${time[timeIndex]}</p>
 $('body').on('click', '#characterLink', function(ev) {
   ev.preventDefault(); // Prevent default link behavior
 
@@ -8,20 +7,42 @@ $('body').on('click', '#characterLink', function(ev) {
   let formal = State.variables.formal;
   let pnS = State.variables.pnS;
   let pnO = State.variables.pnO;
+  let health = State.variables.health;
+  let healthIndex = State.variables.healthIndex;
 
   const popupContent = `
     <div id="popup">
       <div id="popup-content">
-        <img src="images/profile.jpeg" style="max-width: 250px;">
+        <div class="profile-container">
+          <div class="profile-background">
+            <img src="images/profile.jpeg" alt="Profile" class="profile-image">
+          </div>
+        </div>
         <h2>Character Information</h2>
         <p>${formal} ${first_name} ${last_name}</p>
         <p>${pnS}/${pnO}</p>
-        <button id="close-popup">OK</button>
+        <div id="attributes">
+          <h3>Character Attributes</h3>
+          <p class="health-status">Health: ${health[healthIndex]}</p>
+          <div class="attributes-grid">
+            <div class="attribute-item">Speed: <span id="attr-speed">0</span></div>
+            <div class="attribute-item">Strength: <span id="attr-strength">0</span></div>
+            <div class="attribute-item">Agility: <span id="attr-agility">0</span></div>
+            <div class="attribute-item">Constitution: <span id="attr-constitution">0</span></div>
+            <div class="attribute-item">Perception: <span id="attr-perception">0</span></div>
+            <div class="attribute-item">Precision: <span id="attr-precision">0</span></div>
+            <div class="attribute-item">Defense: <span id="attr-defense">0</span></div>
+          </div>
+        </div>        
+        <button id="close-popup">Close</button>
       </div>
     </div>
   `;
 
   $('body').append(popupContent);
+
+  // Update the attributes in the popup
+  updateAttributes();
 
   $('#close-popup').on('click', function() {
     $('#popup').remove();
