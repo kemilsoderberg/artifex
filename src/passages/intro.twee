@@ -16,7 +16,7 @@ if (typeof State.variables.inventory === 'undefined') {
 
 // Add items to the inventory
 State.variables.addInitialItems = function() {
-    addItemToInventory(1, "Helmet", "head", ["Protection +5"], "images/items/helmet.png");
+    addItemToInventory(1, "Helmet", "head", {speed: 5, strength: 2, defense: 5}, "images/items/helmet.png");
     addItemToInventory(2, "Sword", "right-hand", ["Damage +10"], "images/items/sword.png");
     addItemToInventory(3, "Shield", "left-hand", ["Defense +8"], "images/items/shield.png");
     addItemToInventory(4, "Boots", "feet", ["Speed +2"], "images/items/boots.png");

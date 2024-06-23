@@ -140,16 +140,19 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 }
 
 .slot {
-  border: 1px solid #fff;
   padding: 5px;
   text-align: center;
-  width: 120px; /* Increased width slightly */
-  height: 140px; /* Increased height slightly */
+  width: 150px; /* Adjusted width */
+  height: 143px; /* Adjusted height */
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  background-image: url('images/placeholder.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .slot img {
@@ -202,55 +205,56 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Center vertically */
   height: 100%;
   width: 100%;
+  background-color: rgba(0, 0, 0, 0.75); /* Increased opacity for better visibility */
 }
 
-.equip-btn, .unequip-btn, .use-btn {
+.equip-btn, .use-btn {
   padding: 2px 5px;
+  margin-left: 5px;
   background-color: #008CBA;
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  margin-top: 5px; /* Add some space above the button */
 }
 
-[title] {
-  position: relative;
-  cursor: help;
-}
-
-[title]:hover::after {
-  content: attr(title);
+.unequip-btn {
   position: absolute;
-  bottom: 100%;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.slot-type {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
+}
+
+.dynamic-tooltip {
   background-color: #333;
   color: white;
   padding: 5px;
   border-radius: 3px;
   white-space: pre-wrap;
   text-align: left;
-  z-index: 1000;
   font-size: 14px;
   line-height: 1.4;
   min-width: 200px;
   max-width: 300px;
-}
-
-[title]:hover::after {
-  content: attr(title);
-  display: block;
-}
-
-[title]:hover::first-line {
-  font-weight: bold;
-  border-bottom: 1px solid white;
-  padding-bottom: 3px;
-  margin-bottom: 3px;
+  pointer-events: none; /* Prevent the tooltip from interfering with mouse events */
+  position: fixed;
+  z-index: 10000;
+  display: none; /* Initially hidden */
 }
 </style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "characterpopup.js" */
 // Listen for click event on the "Character" link using event delegation
@@ -294,15 +298,14 @@ window.Item = class Item {
         this.id = id;
         this.name = name;
         this.slot = slot;
-        this.attributes = attributes;
+        this.attributes = typeof attributes === 'object' && attributes !== null ? attributes : {};
         this.image = image;
         this.equipped = false;
     }
 
     getDescription() {
-        return `${this.name}\n${this.attributes.map(attr => `• ${attr}`).join('\n')}`;
+        return `${this.name}\n${Object.entries(this.attributes).map(([key, value]) => `• ${key}: ${value}`).join('\n')}`;
     }
-
     getAttributes() {
         return this.attributes.join(', ');
     }
@@ -336,6 +339,7 @@ window.Item = class Item {
     }
 };
 
+
 // Function to add an item to the inventory
 window.addItemToInventory = function(id, name, slot, attributes, image) {
     const newItem = new Item(id, name, slot, attributes, image);
@@ -344,17 +348,34 @@ window.addItemToInventory = function(id, name, slot, attributes, image) {
 
 // Function to update the inventory display
 window.updateInventoryDisplay = function() {
-    const slots = ['head', 'left-hand', 'chest', 'right-hand', 'legs', 'feet', 'accessory1', 'accessory2', 'accessory3'];
+    const slots = [
+        { name: 'head', label: 'Head' },
+        { name: 'left-hand', label: 'Left Hand' },
+        { name: 'chest', label: 'Chest' },
+        { name: 'right-hand', label: 'Right Hand' },
+        { name: 'legs', label: 'Legs' },
+        { name: 'feet', label: 'Feet' },
+        { name: 'accessory1', label: 'Accessory 1' },
+        { name: 'accessory2', label: 'Accessory 2' },
+        { name: 'accessory3', label: 'Accessory 3' }
+    ];
     
     for (let slot of slots) {
-        let item = State.variables.inventory.find(i => i.slot === slot && i.equipped);
-        let slotContent = item 
-            ? `<div class="equipped-item" title="${item.getDescription()}">
-                <img src="${item.image}" alt="${item.name}">
-                <button class="unequip-btn" data-id="${item.id}">Unequip</button>
-               </div>`
-            : 'Empty';
-        $(`.slot.${slot}`).html(slotContent);
+        let item = State.variables.inventory.find(i => i.slot === slot.name && i.equipped);
+        let slotElement = $(`.slot.${slot.name}`);
+        if (item) {
+            slotElement.html(`
+                <div class="equipped-item" title="${item.getDescription()}">
+                    <img src="${item.image}" alt="${item.name}">
+                    <button class="unequip-btn" data-id="${item.id}">Unequip</button>
+                </div>
+            `);
+            slotElement.css('background-color', 'rgba(0, 0, 0, 0.75)'); // Add semi-transparent background
+        } else {
+            slotElement.html(`<div class="slot-type">${slot.label}</div>`);
+            slotElement.css('background-image', 'url("images/placeholder.png")'); // Add placeholder image
+            slotElement.css('background-color', 'transparent'); // Remove semi-transparent background
+        }
     }
 
     let generalInventory = '<ul>';
@@ -363,11 +384,13 @@ window.updateInventoryDisplay = function() {
             let actionButton = item.slot === 'consumable' 
                 ? `<button class="use-btn" data-id="${item.id}">Use</button>`
                 : `<button class="equip-btn" data-id="${item.id}">Equip</button>`;
-            generalInventory += `<li title="${item.getDescription()}">
-                                    <img src="${item.image}" alt="${item.name}"> 
-                                    ${item.name} 
-                                    ${actionButton}
-                                 </li>`;
+            generalInventory += `
+                <li title="${item.getDescription()}">
+                    <img src="${item.image}" alt="${item.name}"> 
+                    ${item.name} 
+                    ${actionButton}
+                </li>
+            `;
         }
     }
     generalInventory += '</ul>';
@@ -440,8 +463,9 @@ $(document).on('click', '.equip-btn', function() {
             });
         }
         item.equip();
-        // Refresh the inventory display
+        // Refresh the inventory display and update attributes
         updateInventoryDisplay();
+        updateAttributes();
     }
 });
 
@@ -451,8 +475,9 @@ $(document).on('click', '.unequip-btn', function() {
     let item = State.variables.inventory.find(i => i.id === itemId);
     if (item) {
         item.unequip();
-        // Refresh the inventory display
+        // Refresh the inventory display and update attributes
         updateInventoryDisplay();
+        updateAttributes();
     }
 });
 
@@ -463,8 +488,9 @@ $(document).on('click', '.use-btn', function() {
     if (item && item.use()) {
         // Remove the item from inventory if it was successfully used
         State.variables.inventory = State.variables.inventory.filter(i => i.id !== itemId);
-        // Refresh the inventory display
+        // Refresh the inventory display and update attributes
         updateInventoryDisplay();
+        updateAttributes();
     }
 });
 
@@ -476,6 +502,112 @@ $(document).on(':passagerender', function() {
         });
     }
 });
+
+$(document).ready(function() {
+    // Create a tooltip element
+    $('body').append('<div class="dynamic-tooltip"></div>');
+    const $tooltip = $('.dynamic-tooltip');
+
+    // Function to show tooltip
+    function showTooltip(event, content) {
+        $tooltip.text(content).show();
+        positionTooltip(event);
+    }
+
+    // Function to hide tooltip
+    function hideTooltip() {
+        $tooltip.hide();
+    }
+
+    // Function to position tooltip
+    function positionTooltip(event) {
+        const tooltipWidth = $tooltip.outerWidth();
+        const tooltipHeight = $tooltip.outerHeight();
+        let top = event.clientY - tooltipHeight - 10; // 10px above cursor
+        let left = event.clientX - (tooltipWidth / 2); // Centered on cursor
+
+        // Adjust if tooltip would go off-screen
+        if (top < 0) top = event.clientY + 10; // Below cursor if it would go above viewport
+        if (left < 0) left = 0;
+        if (left + tooltipWidth > $(window).width()) left = $(window).width() - tooltipWidth;
+
+        $tooltip.css({
+            top: top + 'px',
+            left: left + 'px'
+        });
+    }
+
+    // Event listeners for general inventory items
+    $(document).on('mouseenter', '.general-inventory [title]', function(event) {
+        const content = $(this).attr('title');
+        showTooltip(event, content);
+    }).on('mouseleave', '.general-inventory [title]', function() {
+        hideTooltip();
+    }).on('mousemove', '.general-inventory [title]', function(event) {
+        positionTooltip(event);
+    });
+
+    // Event listeners for inventory grid items
+    $(document).on('mouseenter', '.inventory-grid [title]', function(event) {
+        const content = $(this).attr('title');
+        showTooltip(event, content);
+    }).on('mouseleave', '.inventory-grid [title]', function() {
+        hideTooltip();
+    }).on('mousemove', '.inventory-grid [title]', function(event) {
+        positionTooltip(event);
+    });
+
+    // Hide tooltip on button click
+    $(document).on('click', '.equip-btn, .unequip-btn, .use-btn', function() {
+        hideTooltip();
+    });
+});
+/* twine-user-script #3: "stats.js" */
+// Initialize character attributes
+if (typeof State.variables.attributes === 'undefined') {
+    State.variables.attributes = {
+        speed: 0,
+        strength: 0,
+        agility: 0,
+        constitution: 0,
+        perception: 0,
+        precision: 0,
+        defense: 0
+    };
+}
+
+// Function to update character attributes
+window.updateAttributes = function() {
+    // Reset attributes
+    let baseAttributes = {
+        speed: 0,
+        strength: 0,
+        agility: 0,
+        constitution: 0,
+        perception: 0,
+        precision: 0,
+        defense: 0
+    };
+
+    // Calculate bonuses from equipped items
+    State.variables.inventory.forEach(item => {
+        if (item.equipped) {
+            for (let attr in item.attributes) {
+                if (baseAttributes.hasOwnProperty(attr)) {
+                    baseAttributes[attr] += item.attributes[attr];
+                }
+            }
+        }
+    });
+
+    // Update state attributes
+    State.variables.attributes = baseAttributes;
+
+    // Update displayed attributes
+    for (let attr in baseAttributes) {
+        $(`#attr-${attr}`).text(baseAttributes[attr]);
+    }
+};
 </script><tw-passagedata pid="1" name="Camp" tags="" position="100,100" size="100,100">You have arrived at the camp.
 &lt;&lt;if $timeIndex is 0&gt;&gt;
 The sun is rising, and the birds are singing.
@@ -497,7 +629,9 @@ The fire is warm, and the stars are bright.
 
 [[Camp]]</tw-passagedata><tw-passagedata pid="3" name="Work" tags="" position="350,100" size="100,100">Select which work needs to be done:
 [[Gather food]]
-[[Chop wood]]</tw-passagedata><tw-passagedata pid="4" name="Explore" tags="" position="475,100" size="100,100">Time to explore!
+[[Chop wood]]
+
+[[Back to Camp!|Camp]]</tw-passagedata><tw-passagedata pid="4" name="Explore" tags="" position="475,100" size="100,100">Time to explore!
 
 [[Explore around the camp site]]
 &lt;&lt;if $exploration &gt; 0 &gt;&gt;
@@ -517,7 +651,7 @@ if (typeof State.variables.inventory === &#39;undefined&#39;) {
 
 // Add items to the inventory
 State.variables.addInitialItems = function() {
-    addItemToInventory(1, &quot;Helmet&quot;, &quot;head&quot;, [&quot;Protection +5&quot;], &quot;images/items/helmet.png&quot;);
+    addItemToInventory(1, &quot;Helmet&quot;, &quot;head&quot;, {speed: 5, strength: 2, defense: 5}, &quot;images/items/helmet.png&quot;);
     addItemToInventory(2, &quot;Sword&quot;, &quot;right-hand&quot;, [&quot;Damage +10&quot;], &quot;images/items/sword.png&quot;);
     addItemToInventory(3, &quot;Shield&quot;, &quot;left-hand&quot;, [&quot;Defense +8&quot;], &quot;images/items/shield.png&quot;);
     addItemToInventory(4, &quot;Boots&quot;, &quot;feet&quot;, [&quot;Speed +2&quot;], &quot;images/items/boots.png&quot;);

@@ -9,15 +9,14 @@ window.Item = class Item {
         this.id = id;
         this.name = name;
         this.slot = slot;
-        this.attributes = attributes;
+        this.attributes = typeof attributes === 'object' && attributes !== null ? attributes : {};
         this.image = image;
         this.equipped = false;
     }
 
     getDescription() {
-        return `${this.name}\n${this.attributes.map(attr => `• ${attr}`).join('\n')}`;
+        return `${this.name}\n${Object.entries(this.attributes).map(([key, value]) => `• ${key}: ${value}`).join('\n')}`;
     }
-
     getAttributes() {
         return this.attributes.join(', ');
     }
@@ -51,6 +50,7 @@ window.Item = class Item {
     }
 };
 
+
 // Function to add an item to the inventory
 window.addItemToInventory = function(id, name, slot, attributes, image) {
     const newItem = new Item(id, name, slot, attributes, image);
@@ -59,17 +59,34 @@ window.addItemToInventory = function(id, name, slot, attributes, image) {
 
 // Function to update the inventory display
 window.updateInventoryDisplay = function() {
-    const slots = ['head', 'left-hand', 'chest', 'right-hand', 'legs', 'feet', 'accessory1', 'accessory2', 'accessory3'];
+    const slots = [
+        { name: 'head', label: 'Head' },
+        { name: 'left-hand', label: 'Left Hand' },
+        { name: 'chest', label: 'Chest' },
+        { name: 'right-hand', label: 'Right Hand' },
+        { name: 'legs', label: 'Legs' },
+        { name: 'feet', label: 'Feet' },
+        { name: 'accessory1', label: 'Accessory 1' },
+        { name: 'accessory2', label: 'Accessory 2' },
+        { name: 'accessory3', label: 'Accessory 3' }
+    ];
     
     for (let slot of slots) {
-        let item = State.variables.inventory.find(i => i.slot === slot && i.equipped);
-        let slotContent = item 
-            ? `<div class="equipped-item" title="${item.getDescription()}">
-                <img src="${item.image}" alt="${item.name}">
-                <button class="unequip-btn" data-id="${item.id}">Unequip</button>
-               </div>`
-            : 'Empty';
-        $(`.slot.${slot}`).html(slotContent);
+        let item = State.variables.inventory.find(i => i.slot === slot.name && i.equipped);
+        let slotElement = $(`.slot.${slot.name}`);
+        if (item) {
+            slotElement.html(`
+                <div class="equipped-item" title="${item.getDescription()}">
+                    <img src="${item.image}" alt="${item.name}">
+                    <button class="unequip-btn" data-id="${item.id}">Unequip</button>
+                </div>
+            `);
+            slotElement.css('background-color', 'rgba(0, 0, 0, 0.75)'); // Add semi-transparent background
+        } else {
+            slotElement.html(`<div class="slot-type">${slot.label}</div>`);
+            slotElement.css('background-image', 'url("images/placeholder.png")'); // Add placeholder image
+            slotElement.css('background-color', 'transparent'); // Remove semi-transparent background
+        }
     }
 
     let generalInventory = '<ul>';
@@ -78,11 +95,13 @@ window.updateInventoryDisplay = function() {
             let actionButton = item.slot === 'consumable' 
                 ? `<button class="use-btn" data-id="${item.id}">Use</button>`
                 : `<button class="equip-btn" data-id="${item.id}">Equip</button>`;
-            generalInventory += `<li title="${item.getDescription()}">
-                                    <img src="${item.image}" alt="${item.name}"> 
-                                    ${item.name} 
-                                    ${actionButton}
-                                 </li>`;
+            generalInventory += `
+                <li title="${item.getDescription()}">
+                    <img src="${item.image}" alt="${item.name}"> 
+                    ${item.name} 
+                    ${actionButton}
+                </li>
+            `;
         }
     }
     generalInventory += '</ul>';
@@ -155,8 +174,9 @@ $(document).on('click', '.equip-btn', function() {
             });
         }
         item.equip();
-        // Refresh the inventory display
+        // Refresh the inventory display and update attributes
         updateInventoryDisplay();
+        updateAttributes();
     }
 });
 
@@ -166,8 +186,9 @@ $(document).on('click', '.unequip-btn', function() {
     let item = State.variables.inventory.find(i => i.id === itemId);
     if (item) {
         item.unequip();
-        // Refresh the inventory display
+        // Refresh the inventory display and update attributes
         updateInventoryDisplay();
+        updateAttributes();
     }
 });
 
@@ -178,8 +199,9 @@ $(document).on('click', '.use-btn', function() {
     if (item && item.use()) {
         // Remove the item from inventory if it was successfully used
         State.variables.inventory = State.variables.inventory.filter(i => i.id !== itemId);
-        // Refresh the inventory display
+        // Refresh the inventory display and update attributes
         updateInventoryDisplay();
+        updateAttributes();
     }
 });
 
