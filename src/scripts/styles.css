@@ -105,7 +105,17 @@
   width: 100%;
 }
 
-.equip-btn, .unequip-btn, .use-btn {
+.equip-btn, .use-btn {
+  padding: 2px 5px;
+  margin-left: 5px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.unequip-btn {
   padding: 2px 5px;
   background-color: #008CBA;
   color: white;
@@ -115,38 +125,19 @@
   margin-top: 5px; /* Add some space above the button */
 }
 
-[title] {
-  position: relative;
-  cursor: help;
-}
-
-[title]:hover::after {
-  content: attr(title);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+.dynamic-tooltip {
   background-color: #333;
   color: white;
   padding: 5px;
   border-radius: 3px;
   white-space: pre-wrap;
   text-align: left;
-  z-index: 1000;
   font-size: 14px;
   line-height: 1.4;
   min-width: 200px;
   max-width: 300px;
-}
-
-[title]:hover::after {
-  content: attr(title);
-  display: block;
-}
-
-[title]:hover::first-line {
-  font-weight: bold;
-  border-bottom: 1px solid white;
-  padding-bottom: 3px;
-  margin-bottom: 3px;
+  pointer-events: none; /* Prevent the tooltip from interfering with mouse events */
+  position: fixed;
+  z-index: 10000;
+  display: none; /* Initially hidden */
 }

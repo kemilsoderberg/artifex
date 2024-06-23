@@ -191,3 +191,63 @@ $(document).on(':passagerender', function() {
         });
     }
 });
+
+$(document).ready(function() {
+    // Create a tooltip element
+    $('body').append('<div class="dynamic-tooltip"></div>');
+    const $tooltip = $('.dynamic-tooltip');
+
+    // Function to show tooltip
+    function showTooltip(event, content) {
+        $tooltip.text(content).show();
+        positionTooltip(event);
+    }
+
+    // Function to hide tooltip
+    function hideTooltip() {
+        $tooltip.hide();
+    }
+
+    // Function to position tooltip
+    function positionTooltip(event) {
+        const tooltipWidth = $tooltip.outerWidth();
+        const tooltipHeight = $tooltip.outerHeight();
+        let top = event.clientY - tooltipHeight - 10; // 10px above cursor
+        let left = event.clientX - (tooltipWidth / 2); // Centered on cursor
+
+        // Adjust if tooltip would go off-screen
+        if (top < 0) top = event.clientY + 10; // Below cursor if it would go above viewport
+        if (left < 0) left = 0;
+        if (left + tooltipWidth > $(window).width()) left = $(window).width() - tooltipWidth;
+
+        $tooltip.css({
+            top: top + 'px',
+            left: left + 'px'
+        });
+    }
+
+    // Event listeners for general inventory items
+    $(document).on('mouseenter', '.general-inventory [title]', function(event) {
+        const content = $(this).attr('title');
+        showTooltip(event, content);
+    }).on('mouseleave', '.general-inventory [title]', function() {
+        hideTooltip();
+    }).on('mousemove', '.general-inventory [title]', function(event) {
+        positionTooltip(event);
+    });
+
+    // Event listeners for inventory grid items
+    $(document).on('mouseenter', '.inventory-grid [title]', function(event) {
+        const content = $(this).attr('title');
+        showTooltip(event, content);
+    }).on('mouseleave', '.inventory-grid [title]', function() {
+        hideTooltip();
+    }).on('mousemove', '.inventory-grid [title]', function(event) {
+        positionTooltip(event);
+    });
+
+    // Hide tooltip on button click
+    $(document).on('click', '.equip-btn, .unequip-btn, .use-btn', function() {
+        hideTooltip();
+    });
+});
