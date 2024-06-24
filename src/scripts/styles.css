@@ -55,7 +55,7 @@
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
-  background-image: url('images/placeholder.png');
+  background-image: url('images/items/slot.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -178,7 +178,7 @@
 .profile-background {
   width: 270px;
   height: 270px;
-  background-image: url('images/profile-background.jpg');
+  background-image: url('images/borders/Border/panel-border-024.png');
   background-size: cover;
   background-position: center;
   border-radius: 50%;
@@ -603,4 +603,12 @@ a.link-external:hover {
   color: gold;
   font-weight: bold;
   font-size: 1.2em;
+}
+
+/* CSS for circular images */
+.circular-image {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+  border-radius: 50%;
+  object-fit: cover;
 }

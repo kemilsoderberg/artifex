@@ -18,7 +18,7 @@ The incline there is gentler, offering a potential escape from this desolate pit
 <<set $helmetFound to true>>
 <<script>>
     // Create the helmet item
-    const helmet = new Item(1, "Helmet", "head", {perception: 2, defense: 2}, "images/items/helmet.png");
+    const helmet = new Item(1, "Helmet", "head", {perception: -2, defense: 2}, "images/items/helmet.png");
     State.variables.inventory.push(helmet);
     equipItem(1);
 <</script>>

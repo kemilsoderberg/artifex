@@ -13,6 +13,9 @@ Artifex Pyrophilis
 if (typeof State.variables.inventory === 'undefined') {
     State.variables.inventory = [];
 }
+if (typeof State.variables.profileImage === 'undefined') {
+    State.variables.profileImage = 'images/profile.webp'; // Default profile image
+}
 <</script>>
 
 :: StoryCaption
@@ -62,7 +65,8 @@ if (typeof State.variables.inventory === 'undefined') {
     <<textbox "$formal" "Sir">>
   </div>
   <div class="input-group">
-    <label for="profile-image">Profile Image:</label>
+    <label for="profile-image">Custom Profile Image:</label>
+    <label for="profile-image">Warning: Slow!</label>
     <input type="file" id="profile-image" accept="image/*">
   </div>
   <div class="input-group">
