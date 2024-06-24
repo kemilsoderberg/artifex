@@ -10,9 +10,10 @@ The sun is setting, casting a warm glow over the camp.
 The fire is warm, and the stars are bright.
 <</if>>
 
-[[Sleep]]
-[[Work]]
-[[Explore]]
+[[Heal|heal]]
+[[Hurt|hurt]]
+
+[[Sleep]] [[Work]] [[Explore]]
 
 <<set $playerX = 50>> <!-- Player X position in percentage -->
 <<set $playerY = 50>> <!-- Player Y position in percentage -->
@@ -42,3 +43,11 @@ Time to explore!
     [[Explore in the forest]]
 <</if>>
 [[Back to Camp!|Camp]]
+
+:: heal
+<<set $healthIndex to Math.clamp($healthIndex + 1, 0, 5)>>
+<<goto "Camp">>
+
+:: hurt
+<<set $healthIndex to Math.clamp($healthIndex - 1, 0, 5)>>
+<<goto "Camp">>

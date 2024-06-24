@@ -50,6 +50,37 @@ window.Item = class Item {
     }
 };
 
+// Function to equip an item
+window.equipItem = function(itemId) {
+    const item = State.variables.inventory.find(i => i.id === itemId);
+    if (item) {
+        // Unequip any currently equipped item in the same slot
+        State.variables.inventory.forEach(i => {
+            if (i.slot === item.slot && i.equipped) {
+                i.unequip();
+            }
+        });
+        // Equip the new item
+        item.equip();
+        // Update character attributes
+        updateAttributes();
+        // Update inventory display
+        updateInventoryDisplay();
+    }
+};
+
+// Function to unequip an item
+window.unequipItem = function(itemId) {
+    const item = State.variables.inventory.find(i => i.id === itemId);
+    if (item && item.equipped) {
+        item.unequip();
+        // Update character attributes
+        updateAttributes();
+        // Update inventory display
+        updateInventoryDisplay();
+    }
+};
+
 
 // Function to add an item to the inventory
 window.addItemToInventory = function(id, name, slot, attributes, image) {

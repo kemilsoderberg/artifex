@@ -119,12 +119,15 @@
 
 .equip-btn, .use-btn {
   padding: 2px 5px;
-  margin-left: 5px;
+  margin-left: 10px;
   background-color: var(--main-color);
   color: white;
-  border: none;
+  border: 7px solid transparent; /* Set the border width */
+  border-image: url('images/borders/Border/panel-border-001.png') 30 round; /* Apply the border image */
   border-radius: 3px;
   cursor: pointer;
+  text-align: center;
+  display: inline-block;
 }
 
 .unequip-btn {
@@ -134,9 +137,12 @@
   transform: translateX(-50%);
   background-color: var(--main-color);
   color: white;
-  border: none;
-  border-radius: 3px;
+  border: 7px solid transparent; /* Set the border width */
+  border-image: url('images/borders/Border/panel-border-001.png') 30 round; /* Apply the border image */
+  border-radius: 2px;
   cursor: pointer;
+  text-align: center;
+  display: inline-block;
 }
 
 .slot-type {
@@ -519,4 +525,82 @@ body.start {
 
 #close-map-popup:hover {
   background-color: var(--secondary-color);
+}
+
+/* Style for internal links */
+a.link-internal {
+  color: var(--main-color); /* Change the link color */
+  text-decoration: none; /* Remove underline */
+  padding: 5px 10px; /* Add padding */
+  border: 7px solid transparent; /* Set border width */
+  border-image: url('images/borders/Border/panel-border-000.png') 30 round; /* Apply border image */
+  display: inline-block; /* Make the link behave like a block element */
+}
+
+/* Style for internal links on hover */
+a.link-internal:hover {
+  color: var(--secondary-color); /* Change color on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Add background color on hover */
+}
+
+/* Style for external links */
+a.link-external {
+  color: var(--main-color); /* Change the link color */
+  text-decoration: none; /* Remove underline */
+  padding: 5px 10px; /* Add padding */
+  border: 2px solid transparent; /* Set border width */
+  border-image: url('images/borders/Border/panel-border-000.png') 30 round; /* Apply border image */
+  display: inline-block; /* Make the link behave like a block element */
+}
+
+/* Style for external links on hover */
+a.link-external:hover {
+  color: var(--secondary-color); /* Change color on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Add background color on hover */
+}
+
+/* Style for the divider image */
+.divider {
+  display: block;
+  margin: 10px auto; /* Center the divider and add some margin */
+  transform: scaleX(-1); /* Flip the image horizontally */
+  width: 100%; /* Adjust the width as needed */
+  max-width: 200px; /* Set a maximum width */
+}
+
+/* CSS for health states */
+.health-dying {
+  color: red;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.health-wounded {
+  color: orange;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.health-bruised {
+  color: yellow;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.health-fine {
+  color: greenyellow;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+.health-good {
+  color: lightblue;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+.health-divine {
+  color: gold;
+  font-weight: bold;
+  font-size: 1.2em;
 }

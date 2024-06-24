@@ -27,15 +27,18 @@ if (typeof State.variables.inventory === 'undefined') {
         <img src="images/night.jpg" style="max-width: 250px;">
     <</if>>
 
-
+    <<set $healthClass to "health-" + $health[$healthIndex]>>
     Time of day: <<print $time[$timeIndex]>>
     Day $dayIndex
 
-    You are <<print $health[$healthIndex]>>
-    <a href="#" id="characterLink">Character</a>
-    <a href="#" id="inventoryLink">Inventory</a>
-    <a href="#" id="codexLink">Codex</a>
-    <a href="#" id="mapLink">Map</a>
+    You are <span id="health-status"><<print $health[$healthIndex]>></span>
+    <<addclass "#health-status" $healthClass>>
+    <img src="images/borders/fade-divider/divider-fade-001.png" class="divider">
+    <a href="#" class="link-internal" id="characterLink">Character</a>
+    <a href="#" class="link-internal" id="inventoryLink">Inventory</a>
+    <a href="#" class="link-internal" id="codexLink">Codex</a>
+    <a href="#" class="link-internal" id="mapLink">Map</a>
+    <img src="images/borders/fade-divider/divider-fade-001.png" class="divider">
 <</if>>
 
 :: Start [start]
