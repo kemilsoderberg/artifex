@@ -41,6 +41,7 @@ if (typeof State.variables.profileImage === 'undefined') {
     <a href="#" class="link-internal" id="inventoryLink">Inventory</a>
     <a href="#" class="link-internal" id="codexLink">Codex</a>
     <a href="#" class="link-internal" id="mapLink">Map</a>
+    <a href="#" class="link-internal" id="debugLink">Debug menu</a>
     <img src="images/borders/fade-divider/divider-fade-001.png" class="divider">
 <</if>>
 

@@ -5,21 +5,11 @@ Every fiber of your being throbs with a relentless, all-encompassing pain, as if
 
 [[Look around]]
 
+<<shakescreen 2s>>
+
 :: Look around
 As your eyes adjust to the dim light filtering through the dust and debris, you notice a section of the crater's edge that appears slightly less treacherous. 
 The incline there is gentler, offering a potential escape from this desolate pit. The surrounding landscape is a bleak expanse, but that one spot might just be your way out.
-<<if $helmetFound is not true>>
-[[You found a helmet!|Helmet]]
-<</if>>
+
 [[Climb|Camp][$dayIndex to 0]]
 [[Go back|Crash]]
-
-:: Helmet
-<<set $helmetFound to true>>
-<<script>>
-    // Create the helmet item
-    const helmet = new Item(1, "Helmet", "head", {perception: -2, defense: 2}, "images/items/helmet.png");
-    State.variables.inventory.push(helmet);
-    equipItem(1);
-<</script>>
-<<goto "Look around">>
