@@ -34,22 +34,41 @@ if (typeof State.variables.inventory === 'undefined') {
     You are <<print $health[$healthIndex]>>
     <a href="#" id="characterLink">Character</a>
     <a href="#" id="inventoryLink">Inventory</a>
+    <a href="#" id="codexLink">Codex</a>
+    <a href="#" id="mapLink">Map</a>
 <</if>>
 
-:: Start
-Set your name, pronouns, formal title and auxilliary verb (e.g. They 'are', she 'is')
-First Name:
-<<textbox "$first_name" "Berepert">>
-Last Name:
-<<textbox "$last_name" "Leinorta">>
-Pronouns:
-<<textbox "$pnS" "They">> <<textbox "$pnO" "Them">> 
-Title:
-<<textbox "$formal" "Sir">>
-Auxilliary verb:
-<<textbox "$aux" "are">>
+:: Start [start]
+<div id="start-container">
+  <h1>Character Creation</h1>
+  <p>Set your name, pronouns, and formal title</p>
+  <div class="input-group">
+    <label for="first-name">First Name:</label>
+    <<textbox "$first_name" "Berepert">>
+  </div>
+  <div class="input-group">
+    <label for="last-name">Last Name:</label>
+    <<textbox "$last_name" "Leinorta">>
+  </div>
+  <div class="input-group">
+    <label>Pronouns:</label>
+    <<textbox "$pnS" "They">> <<textbox "$pnO" "Them">>
+  </div>
+  <div class="input-group">
+    <label for="title">Title:</label>
+    <<textbox "$formal" "Sir">>
+  </div>
+  <div class="input-group">
+    <label for="profile-image">Profile Image:</label>
+    <input type="file" id="profile-image" accept="image/*">
+  </div>
+  <div class="input-group">
+    <img id="profile-preview" src="" alt="Profile Image Preview" style="display: none; max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px;">
+  </div>
+  <<button "Submit" "Crash">><</button>>
+</div>
 
-<<button "Submit" "Crash">><</button>>
+
 <<set $time to ["morning", "noon", "evening", "night"]>>
 <<set $health to ["dying", "wounded", "bruised", "fine", "good", "divine"]>>
 <<set $healthIndex to 0>>

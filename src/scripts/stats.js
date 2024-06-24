@@ -7,7 +7,8 @@ if (typeof State.variables.attributes === 'undefined') {
         constitution: 0,
         perception: 0,
         precision: 0,
-        defense: 0
+        defense: 0,
+        luck: 0
     };
 }
 
@@ -21,7 +22,8 @@ window.updateAttributes = function() {
         constitution: 0,
         perception: 0,
         precision: 0,
-        defense: 0
+        defense: 0,
+        luck: 0
     };
 
     // Calculate bonuses from equipped items

@@ -14,6 +14,8 @@ The fire is warm, and the stars are bright.
 [[Work]]
 [[Explore]]
 
+<<set $playerX = 50>> <!-- Player X position in percentage -->
+<<set $playerY = 50>> <!-- Player Y position in percentage -->
 
 :: Sleep
 Good night!
@@ -35,7 +37,8 @@ Select which work needs to be done:
 :: Explore
 Time to explore!
 
-[[Explore around the camp site]]
+[[Explore around the camp site|Camp Exploration]]
 <<if $exploration > 0 >>
     [[Explore in the forest]]
 <</if>>
+[[Back to Camp!|Camp]]

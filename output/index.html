@@ -100,7 +100,14 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 		<div id="init-lacking">Your browser lacks required capabilities. Please upgrade it or switch to another to continue.</div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://A315FCE2-274E-4071-9F61-5EE4D3D26372// --><tw-storydata name="Artifex Pyrophilis" startnode="10" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="A315FCE2-274E-4071-9F61-5EE4D3D26372" zoom="1" format="SugarCube" format-version="2.30.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">#popup {
+	<!-- UUID://A315FCE2-274E-4071-9F61-5EE4D3D26372// --><tw-storydata name="Artifex Pyrophilis" startnode="11" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="A315FCE2-274E-4071-9F61-5EE4D3D26372" zoom="1" format="SugarCube" format-version="2.30.0" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">:root {
+  --main-color: #00785E;
+  --secondary-color: #002A2A;
+  --background-color: rgba(51, 51, 51, 0.8);
+  --text-color: white;
+}
+
+#popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -114,7 +121,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 }
 
 #popup-content {
-  background-color: rgba(51, 51, 51, 0.8); /* Dark background with 80% opacity */
+  background-color: var(--background-color);
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -215,7 +222,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 .equip-btn, .use-btn {
   padding: 2px 5px;
   margin-left: 5px;
-  background-color: #008CBA;
+  background-color: var(--main-color);
   color: white;
   border: none;
   border-radius: 3px;
@@ -227,7 +234,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
   bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #008CBA;
+  background-color: var(--main-color);
   color: white;
   border: none;
   border-radius: 3px;
@@ -311,7 +318,7 @@ h2, h3 {
 #close-popup {
   margin-top: 20px;
   padding: 2px 5px;
-  background-color: #008CBA; /* Match the equip button color */
+  background-color: var(--main-color); /* Match the equip button color */
   color: white;
   border: none;
   border-radius: 3px;
@@ -320,8 +327,301 @@ h2, h3 {
 }
 
 #close-popup:hover {
-  background-color: #007B9E; /* Slightly darker on hover */
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "characterpopup.js" */
+  background-color: var(--secondary-color); /* Slightly darker on hover */
+}
+
+body.start {
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+.passage.start #start-container {
+  background-color: rgba(51, 51, 51, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+}
+
+.passage.start h1 {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+.passage.start h2 {
+  color: #ddd;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.passage.start form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.passage.start label {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.passage.start input[type="text"],
+.passage.start input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #333;
+  color: white;
+  box-sizing: border-box;
+}
+
+.passage.start input[type="text"]:focus,
+.passage.start input[type="file"]:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.passage.start button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.passage.start button:hover {
+  background-color: var(--secondary-color);
+}
+
+.passage.start #start-container {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.passage.start ::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.fade-out-down {
+  animation: fadeOutDown 0.5s ease-out forwards;
+}
+
+#codex-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#codex-popup-content {
+  background-color: rgba(51, 51, 51, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 1200px;
+  height: 90%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.tabs, .sub-tabs, .nested-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab-button, .sub-tab-button, .nested-tab-button {
+  padding: 10px 20px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin: 0 5px;
+}
+
+.tab-button.active, .sub-tab-button.active, .nested-tab-button.active {
+  background-color: var(--secondary-color);
+}
+
+.tab-button:hover, .sub-tab-button:hover, .nested-tab-button:hover {
+  background-color: var(--secondary-color);
+}
+
+.tab-content, .sub-tab-content, .nested-tab-content {
+  display: none;
+}
+
+.tab-content.active, .sub-tab-content.active, .nested-tab-content.active {
+  display: block;
+}
+
+.left-pane {
+  float: left;
+  width: 30%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.right-pane {
+  float: right;
+  width: 70%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.content-iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+}
+
+#close-codex-popup {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+#close-codex-popup:hover {
+  background-color: var(--secondary-color);
+}
+
+
+.sub-tabs, .nested-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  float: left;
+  margin-right: 20px;
+}
+
+.sub-tab-button, .nested-tab-button {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sub-tab-button.active, .nested-tab-button.active {
+  background-color: var(--main-color);
+}
+
+.sub-tab-content, .nested-tab-content {
+  display: none;
+}
+
+.sub-tab-content.active, .nested-tab-content.active {
+  display: block;
+}
+
+#map-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#map-popup-content {
+  background-color: rgba(51, 51, 51, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 1200px;
+  height: 90%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+#mapCanvas {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+}
+
+#close-map-popup {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+#close-map-popup:hover {
+  background-color: var(--secondary-color);
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "character.js" */
 // Listen for click event on the "Character" link using event delegation
 $('body').on('click', '#characterLink', function(ev) {
   ev.preventDefault(); // Prevent default link behavior
@@ -339,12 +639,12 @@ $('body').on('click', '#characterLink', function(ev) {
       <div id="popup-content">
         <div class="profile-container">
           <div class="profile-background">
-            <img src="images/profile.jpeg" alt="Profile" class="profile-image">
+            <img src="${State.variables.profileImage}" alt="Profile" class="profile-image">
           </div>
         </div>
         <h2>Character Information</h2>
-        <p>${formal} ${first_name} ${last_name}</p>
-        <p>${pnS}/${pnO}</p>
+        <p>${State.variables.formal} ${State.variables.first_name} ${State.variables.last_name}</p>
+        <p>${State.variables.pnS}/${State.variables.pnO}</p>
         <div id="attributes">
           <h3>Character Attributes</h3>
           <p class="health-status">Health: ${health[healthIndex]}</p>
@@ -356,6 +656,7 @@ $('body').on('click', '#characterLink', function(ev) {
             <div class="attribute-item">Perception: <span id="attr-perception">0</span></div>
             <div class="attribute-item">Precision: <span id="attr-precision">0</span></div>
             <div class="attribute-item">Defense: <span id="attr-defense">0</span></div>
+            <div class="attribute-item">Luck: <span id="attr-luck">0</span></div>
           </div>
         </div>        
         <button id="close-popup">Close</button>
@@ -372,7 +673,156 @@ $('body').on('click', '#characterLink', function(ev) {
     $('#popup').remove();
   });
 });
-/* twine-user-script #2: "inventory.js" */
+/* twine-user-script #2: "codex.js" */
+// Listen for click event on the "Codex" link using event delegation
+$('body').on('click', '#codexLink', function(ev) {
+    ev.preventDefault(); // Prevent default link behavior
+  
+    const codexContent = `
+      <div id="codex-popup" class="fade-in-up">
+        <div id="codex-popup-content">
+          <h2>Codex</h2>
+          <div class="tabs">
+            <button class="tab-button active" data-tab="startpage" data-src="codex/startpage.html">Start Page</button>
+            <button class="tab-button" data-tab="animals" data-src="codex/animals.html">Animals</button>
+            <button class="tab-button" data-tab="sentients" data-src="codex/sentients.html">Sentients</button>
+          </div>
+          <div class="tab-content active" id="startpage">
+            <iframe src="codex/startpage.html" class="content-iframe"></iframe>
+          </div>
+          <div class="tab-content" id="animals">
+            <div class="left-pane">
+              <div class="sub-tabs">
+                <button class="sub-tab-button" data-subtab="cow" data-nested="cow-nested-tabs" data-src="codex/cow.html">Cow</button>
+                <button class="sub-tab-button" data-subtab="pig" data-src="codex/pig.html">Pig</button>
+              </div>
+              <div class="nested-tabs" id="cow-nested-tabs" style="display: none;">
+                <button class="nested-tab-button" data-nestedtab="brown-cow" data-src="codex/brown-cow.html">Brown Cow</button>
+                <button class="nested-tab-button" data-nestedtab="white-cow" data-src="codex/white-cow.html">White Cow</button>
+              </div>
+            </div>
+            <div class="right-pane">
+              <div class="sub-tab-content" id="cow">
+                <h3>Cow</h3>
+                <iframe src="codex/cow.html" class="content-iframe"></iframe>
+              </div>
+              <div class="nested-tab-content" id="brown-cow">
+                <h4>Brown Cow</h4>
+                <iframe src="codex/brown-cow.html" class="content-iframe"></iframe>
+              </div>
+              <div class="nested-tab-content" id="white-cow">
+                <h4>White Cow</h4>
+                <iframe src="codex/white-cow.html" class="content-iframe"></iframe>
+              </div>
+              <div class="sub-tab-content" id="pig">
+                <h3>Pig</h3>
+                <iframe src="codex/pig.html" class="content-iframe"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="tab-content" id="sentients">
+            <div class="left-pane">
+              <div class="sub-tabs">
+                <button class="sub-tab-button" data-subtab="human" data-nested="human-nested-tabs" data-src="codex/human.html">Humans</button>
+                <button class="sub-tab-button" data-subtab="orc" data-src="codex/orc.html">Orcs</button>
+              </div>
+              <div class="nested-tabs" id="human-nested-tabs" style="display: none;">
+                <button class="nested-tab-button" data-nestedtab="human-orc" data-src="codex/human-orc.html">Human-Orc</button>
+                <button class="nested-tab-button" data-nestedtab="halfling" data-src="codex/halfling.html">Halfling</button>
+              </div>
+            </div>
+            <div class="right-pane">
+              <div class="sub-tab-content" id="human">
+                <h3>Human</h3>
+                <iframe src="codex/human.html" class="content-iframe"></iframe>
+              </div>
+              <div class="nested-tab-content" id="human-orc">
+                <h4>Human-Orc</h4>
+                <iframe src="codex/human-orc.html" class="content-iframe"></iframe>
+              </div>
+              <div class="nested-tab-content" id="halfling">
+                <h4>Halfling</h4>
+                <iframe src="codex/halfling.html" class="content-iframe"></iframe>
+              </div>
+              <div class="sub-tab-content" id="orc">
+                <h3>Orcs</h3>
+                <iframe src="codex/orc.html" class="content-iframe"></iframe>
+              </div>
+            </div>
+          </div>
+          <button id="close-codex-popup">Close</button>
+        </div>
+      </div>
+    `;
+  
+    $('body').append(codexContent);
+  
+    // Ensure the start page is displayed
+    $('#startpage').show();
+  
+    // Handle main tab switching
+    $('.tab-button').on('click', function() {
+      const tab = $(this).data('tab');
+      const src = $(this).data('src');
+      $('.tab-button').removeClass('active');
+      $(this).addClass('active');
+      $('.tab-content').removeClass('active').hide();
+      $(`#${tab}`).addClass('active').show();
+      $(`#${tab} .content-iframe`).attr('src', src);
+      
+      // Reset sub-tabs and nested-tabs when switching main tabs
+      $('.sub-tab-button, .nested-tab-button').removeClass('active');
+      $('.sub-tab-content, .nested-tab-content').hide();
+      $('.nested-tabs').hide();
+    });
+  
+    // Handle sub-tab switching
+    $('.sub-tab-button').on('click', function() {
+      const subtab = $(this).data('subtab');
+      const nestedTabsId = $(this).data('nested');
+      const src = $(this).data('src');
+      $('.sub-tab-button').removeClass('active');
+      $(this).addClass('active');
+      $('.sub-tab-content').hide();
+      $(`#${subtab}`).show();
+      $(`#${subtab} .content-iframe`).attr('src', src);
+      
+      // Reset nested-tabs when switching sub-tabs
+      $('.nested-tab-button').removeClass('active');
+      $('.nested-tab-content').hide();
+      
+      // Show nested tabs if they exist for the selected sub-tab
+      if (nestedTabsId) {
+        $(`#${nestedTabsId}`).show();
+      } else {
+        $('.nested-tabs').hide();
+      }
+    });
+  
+    // Handle nested-tab switching
+    $('.nested-tab-button').on('click', function() {
+      const nestedtab = $(this).data('nestedtab');
+      const src = $(this).data('src');
+      $('.nested-tab-button').removeClass('active');
+      $(this).addClass('active');
+      $('.nested-tab-content').hide();
+      $(`#${nestedtab}`).show();
+      $(`#${nestedtab} .content-iframe`).attr('src', src);
+      
+      // Hide the iframe of the sub-tab content when a nested tab is opened
+      $(this).closest('.sub-tab-content').find('.content-iframe').hide();
+    });
+  
+    // Close the Codex popup with fade-out animation
+    $('#close-codex-popup').on('click', function() {
+      $('#codex-popup').removeClass('fade-in-up').addClass('fade-out-down');
+      setTimeout(function() {
+        $('#codex-popup').remove();
+      }, 500);
+    });
+  });
+  
+/* twine-user-script #3: "inventory.js" */
 // Initialize inventory if not already defined
 if (typeof State.variables.inventory === 'undefined') {
     State.variables.inventory = [];
@@ -648,7 +1098,175 @@ $(document).ready(function() {
         hideTooltip();
     });
 });
-/* twine-user-script #3: "stats.js" */
+/* twine-user-script #4: "map.js" */
+// Listen for click event on the "Map" link using event delegation
+$('body').on('click', '#mapLink', function(ev) {
+    ev.preventDefault(); // Prevent default link behavior
+  
+    const mapContent = `
+      <div id="map-popup" class="fade-in-up">
+        <div id="map-popup-content">
+          <h2>Map</h2>
+          <canvas id="mapCanvas"></canvas>
+          <button id="close-map-popup">Close</button>
+        </div>
+      </div>
+    `;
+  
+    $('body').append(mapContent);
+  
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d');
+    const mapImage = new Image();
+    mapImage.src = 'images/map-background.webp';
+  
+    let isDragging = false;
+    let startX, startY;
+    let offsetX = 0, offsetY = 0;
+    let scale = 10; // Default zoom level
+    let isRedrawing = false;
+  
+    mapImage.onload = function() {
+      canvas.width = mapImage.width;
+      canvas.height = mapImage.height;
+      applyInitialZoom();
+      requestRedraw();
+    };
+  
+    canvas.addEventListener('mousedown', startDragging);
+    canvas.addEventListener('mousemove', drag);
+    canvas.addEventListener('mouseup', stopDragging);
+    canvas.addEventListener('mouseleave', stopDragging);
+    canvas.addEventListener('wheel', zoom);
+  
+    function startDragging(e) {
+      isDragging = true;
+      startX = e.clientX - offsetX;
+      startY = e.clientY - offsetY;
+    }
+  
+    function drag(e) {
+      if (!isDragging) return;
+      offsetX = e.clientX - startX;
+      offsetY = e.clientY - startY;
+      requestRedraw();
+    }
+  
+    function stopDragging() {
+      isDragging = false;
+    }
+  
+    function zoom(e) {
+      e.preventDefault();
+      const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+      scale *= zoomFactor;
+      requestRedraw();
+    }
+  
+    function requestRedraw() {
+      if (!isRedrawing) {
+        isRedrawing = true;
+        requestAnimationFrame(redrawMap);
+      }
+    }
+  
+    function applyInitialZoom() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.scale(scale, scale);
+      ctx.translate(-canvas.width / 2, -canvas.height / 2);
+      drawMapImage();
+      ctx.restore();
+    }
+  
+    function redrawMap() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.scale(scale, scale);
+      ctx.translate(-canvas.width / 2 + offsetX, -canvas.height / 2 + offsetY);
+      drawMapImage();
+      ctx.restore();
+      drawPlayer();
+      isRedrawing = false;
+    }
+  
+    function drawMapImage() {
+      const aspectRatio = mapImage.width / mapImage.height;
+      let drawWidth, drawHeight;
+  
+      if (canvas.width / canvas.height > aspectRatio) {
+        drawWidth = canvas.width;
+        drawHeight = canvas.width / aspectRatio;
+      } else {
+        drawWidth = canvas.height * aspectRatio;
+        drawHeight = canvas.height;
+      }
+  
+      const drawX = (canvas.width - drawWidth) / 2;
+      const drawY = (canvas.height - drawHeight) / 2;
+  
+      ctx.drawImage(mapImage, drawX, drawY, drawWidth, drawHeight);
+    }
+  
+    function drawPlayer() {
+      const playerX = State.variables.playerX; // Read player X position from Twine variable
+      const playerY = State.variables.playerY; // Read player Y position from Twine variable
+      const playerImage = new Image();
+      playerImage.src = 'images/player-icon.png';
+      playerImage.onload = function() {
+        const playerPosX = (playerX / 100) * mapImage.width;
+        const playerPosY = (playerY / 100) * mapImage.height;
+        const playerSize = 50 / scale; // Adjust player size based on the scale
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.scale(scale, scale);
+        ctx.translate(-canvas.width / 2 + offsetX, -canvas.height / 2 + offsetY);
+        ctx.drawImage(playerImage, playerPosX - playerSize / 2, playerPosY - playerSize / 2, playerSize, playerSize);
+        ctx.restore();
+      };
+    }
+  
+    // Close the map popup with fade-out animation
+    $('#close-map-popup').on('click', function() {
+      $('#map-popup').removeClass('fade-in-up').addClass('fade-out-down');
+      setTimeout(function() {
+        $('#map-popup').remove();
+      }, 500);
+    });
+  });
+  
+/* twine-user-script #5: "misc.js" */
+// Listen for the file input change event
+$('body').on('change', '#profile-image', function(ev) {
+    const file = ev.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            State.variables.profileImage = e.target.result;
+            $('#profile-preview').attr('src', e.target.result).show();
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Listen for click event on the "Submit" button
+$('body').on('click', 'button:contains("Submit")', function(ev) {
+    ev.preventDefault(); // Prevent default button behavior
+
+    // Set other variables as needed
+    State.variables.first_name = $('input[name="first_name"]').val();
+    State.variables.last_name = $('input[name="last_name"]').val();
+    State.variables.pnS = $('input[name="pnS"]').val();
+    State.variables.pnO = $('input[name="pnO"]').val();
+    State.variables.formal = $('input[name="formal"]').val();
+    State.variables.aux = $('input[name="aux"]:checked').val();
+
+    // Navigate to the next passage
+    Engine.play('Crash');
+});
+/* twine-user-script #6: "stats.js" */
 // Initialize character attributes
 if (typeof State.variables.attributes === 'undefined') {
     State.variables.attributes = {
@@ -658,7 +1276,8 @@ if (typeof State.variables.attributes === 'undefined') {
         constitution: 0,
         perception: 0,
         precision: 0,
-        defense: 0
+        defense: 0,
+        luck: 0
     };
 }
 
@@ -672,7 +1291,8 @@ window.updateAttributes = function() {
         constitution: 0,
         perception: 0,
         precision: 0,
-        defense: 0
+        defense: 0,
+        luck: 0
     };
 
     // Calculate bonuses from equipped items
@@ -707,7 +1327,10 @@ The fire is warm, and the stars are bright.
 
 [[Sleep]]
 [[Work]]
-[[Explore]]</tw-passagedata><tw-passagedata pid="2" name="Sleep" tags="" position="225,100" size="100,100">Good night!
+[[Explore]]
+
+&lt;&lt;set $playerX = 50&gt;&gt; &lt;!-- Player X position in percentage --&gt;
+&lt;&lt;set $playerY = 50&gt;&gt; &lt;!-- Player Y position in percentage --&gt;</tw-passagedata><tw-passagedata pid="2" name="Sleep" tags="" position="225,100" size="100,100">Good night!
 &lt;&lt;set $timeIndex to ($timeIndex + 1) % $time.length&gt;&gt;
 &lt;&lt;if $timeIndex is 0&gt;&gt;
     &lt;&lt;set $dayIndex to $dayIndex + 1&gt;&gt;
@@ -719,31 +1342,32 @@ The fire is warm, and the stars are bright.
 
 [[Back to Camp!|Camp]]</tw-passagedata><tw-passagedata pid="4" name="Explore" tags="" position="475,100" size="100,100">Time to explore!
 
-[[Explore around the camp site]]
+[[Explore around the camp site|Camp Exploration]]
 &lt;&lt;if $exploration &gt; 0 &gt;&gt;
     [[Explore in the forest]]
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="Crash" tags="" position="600,100" size="100,100">You awaken in a smoldering crater, the aftermath of your own catastrophic descent. 
+&lt;&lt;/if&gt;&gt;
+[[Back to Camp!|Camp]]</tw-passagedata><tw-passagedata pid="5" name="Camp Exploration" tags="" position="600,100" size="100,100"></tw-passagedata><tw-passagedata pid="6" name="Crash" tags="" position="725,100" size="100,100">You awaken in a smoldering crater, the aftermath of your own catastrophic descent. 
 The air is thick with the scent of scorched earth and the acrid tang of burnt metal. 
 Every fiber of your being throbs with a relentless, all-encompassing pain, as if the very essence of your existence has been shattered and reassembled in the most agonizing manner possible.
 
-[[Look around]]</tw-passagedata><tw-passagedata pid="6" name="Look around" tags="" position="725,100" size="100,100">As your eyes adjust to the dim light filtering through the dust and debris, you notice a section of the crater&#39;s edge that appears slightly less treacherous. 
+[[Look around]]</tw-passagedata><tw-passagedata pid="7" name="Look around" tags="" position="850,100" size="100,100">As your eyes adjust to the dim light filtering through the dust and debris, you notice a section of the crater&#39;s edge that appears slightly less treacherous. 
 The incline there is gentler, offering a potential escape from this desolate pit. The surrounding landscape is a bleak expanse, but that one spot might just be your way out.
 &lt;&lt;if $helmetFound is not true&gt;&gt;
 [[You found a helmet!|Helmet]]
 &lt;&lt;/if&gt;&gt;
 [[Climb|Camp][$dayIndex to 0]]
-[[Go back|Crash]]</tw-passagedata><tw-passagedata pid="7" name="Helmet" tags="" position="850,100" size="100,100">&lt;&lt;set $helmetFound to true&gt;&gt;
+[[Go back|Crash]]</tw-passagedata><tw-passagedata pid="8" name="Helmet" tags="" position="975,100" size="100,100">&lt;&lt;set $helmetFound to true&gt;&gt;
 &lt;&lt;script&gt;&gt;
 State.variables.addInitialItems = function() {
     addItemToInventory(1, &quot;Helmet&quot;, &quot;head&quot;, {perception: 2, defense: 2}, &quot;images/items/helmet.png&quot;);
 };
 State.variables.addInitialItems();
 &lt;&lt;/script&gt;&gt;
-&lt;&lt;goto &quot;Look around&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="StoryInit" tags="" position="975,100" size="100,100">&lt;&lt;script&gt;&gt;
+&lt;&lt;goto &quot;Look around&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="StoryInit" tags="" position="1100,100" size="100,100">&lt;&lt;script&gt;&gt;
 if (typeof State.variables.inventory === &#39;undefined&#39;) {
     State.variables.inventory = [];
 }
-&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="StoryCaption" tags="" position="1100,100" size="100,100">&lt;&lt;if $dayIndex &gt; -1&gt;&gt;
+&lt;&lt;/script&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="StoryCaption" tags="" position="1225,100" size="100,100">&lt;&lt;if $dayIndex &gt; -1&gt;&gt;
     &lt;&lt;if $timeIndex is 0&gt;&gt;
         &lt;img src=&quot;images/morning.png&quot; style=&quot;max-width: 250px;&quot;&gt;
     &lt;&lt;elseif $timeIndex is 1&gt;&gt;
@@ -761,19 +1385,38 @@ if (typeof State.variables.inventory === &#39;undefined&#39;) {
     You are &lt;&lt;print $health[$healthIndex]&gt;&gt;
     &lt;a href=&quot;#&quot; id=&quot;characterLink&quot;&gt;Character&lt;/a&gt;
     &lt;a href=&quot;#&quot; id=&quot;inventoryLink&quot;&gt;Inventory&lt;/a&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="Start" tags="" position="1225,100" size="100,100">Set your name, pronouns, formal title and auxilliary verb (e.g. They &#39;are&#39;, she &#39;is&#39;)
-First Name:
-&lt;&lt;textbox &quot;$first_name&quot; &quot;Berepert&quot;&gt;&gt;
-Last Name:
-&lt;&lt;textbox &quot;$last_name&quot; &quot;Leinorta&quot;&gt;&gt;
-Pronouns:
-&lt;&lt;textbox &quot;$pnS&quot; &quot;They&quot;&gt;&gt; &lt;&lt;textbox &quot;$pnO&quot; &quot;Them&quot;&gt;&gt; 
-Title:
-&lt;&lt;textbox &quot;$formal&quot; &quot;Sir&quot;&gt;&gt;
-Auxilliary verb:
-&lt;&lt;textbox &quot;$aux&quot; &quot;are&quot;&gt;&gt;
+    &lt;a href=&quot;#&quot; id=&quot;codexLink&quot;&gt;Codex&lt;/a&gt;
+    &lt;a href=&quot;#&quot; id=&quot;mapLink&quot;&gt;Map&lt;/a&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="Start" tags="start" position="100,225" size="100,100">&lt;div id=&quot;start-container&quot;&gt;
+  &lt;h1&gt;Character Creation&lt;/h1&gt;
+  &lt;p&gt;Set your name, pronouns, and formal title&lt;/p&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;label for=&quot;first-name&quot;&gt;First Name:&lt;/label&gt;
+    &lt;&lt;textbox &quot;$first_name&quot; &quot;Berepert&quot;&gt;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;label for=&quot;last-name&quot;&gt;Last Name:&lt;/label&gt;
+    &lt;&lt;textbox &quot;$last_name&quot; &quot;Leinorta&quot;&gt;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;label&gt;Pronouns:&lt;/label&gt;
+    &lt;&lt;textbox &quot;$pnS&quot; &quot;They&quot;&gt;&gt; &lt;&lt;textbox &quot;$pnO&quot; &quot;Them&quot;&gt;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;label for=&quot;title&quot;&gt;Title:&lt;/label&gt;
+    &lt;&lt;textbox &quot;$formal&quot; &quot;Sir&quot;&gt;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;label for=&quot;profile-image&quot;&gt;Profile Image:&lt;/label&gt;
+    &lt;input type=&quot;file&quot; id=&quot;profile-image&quot; accept=&quot;image/*&quot;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;img id=&quot;profile-preview&quot; src=&quot;&quot; alt=&quot;Profile Image Preview&quot; style=&quot;display: none; max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px;&quot;&gt;
+  &lt;/div&gt;
+  &lt;&lt;button &quot;Submit&quot; &quot;Crash&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
+&lt;/div&gt;
 
-&lt;&lt;button &quot;Submit&quot; &quot;Crash&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;
+
 &lt;&lt;set $time to [&quot;morning&quot;, &quot;noon&quot;, &quot;evening&quot;, &quot;night&quot;]&gt;&gt;
 &lt;&lt;set $health to [&quot;dying&quot;, &quot;wounded&quot;, &quot;bruised&quot;, &quot;fine&quot;, &quot;good&quot;, &quot;divine&quot;]&gt;&gt;
 &lt;&lt;set $healthIndex to 0&gt;&gt;

@@ -15,12 +15,12 @@ $('body').on('click', '#characterLink', function(ev) {
       <div id="popup-content">
         <div class="profile-container">
           <div class="profile-background">
-            <img src="images/profile.jpeg" alt="Profile" class="profile-image">
+            <img src="${State.variables.profileImage}" alt="Profile" class="profile-image">
           </div>
         </div>
         <h2>Character Information</h2>
-        <p>${formal} ${first_name} ${last_name}</p>
-        <p>${pnS}/${pnO}</p>
+        <p>${State.variables.formal} ${State.variables.first_name} ${State.variables.last_name}</p>
+        <p>${State.variables.pnS}/${State.variables.pnO}</p>
         <div id="attributes">
           <h3>Character Attributes</h3>
           <p class="health-status">Health: ${health[healthIndex]}</p>
@@ -32,6 +32,7 @@ $('body').on('click', '#characterLink', function(ev) {
             <div class="attribute-item">Perception: <span id="attr-perception">0</span></div>
             <div class="attribute-item">Precision: <span id="attr-precision">0</span></div>
             <div class="attribute-item">Defense: <span id="attr-defense">0</span></div>
+            <div class="attribute-item">Luck: <span id="attr-luck">0</span></div>
           </div>
         </div>        
         <button id="close-popup">Close</button>

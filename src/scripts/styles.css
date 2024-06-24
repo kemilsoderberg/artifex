@@ -1,3 +1,10 @@
+:root {
+  --main-color: #00785E;
+  --secondary-color: #002A2A;
+  --background-color: rgba(51, 51, 51, 0.8);
+  --text-color: white;
+}
+
 #popup {
   position: fixed;
   top: 0;
@@ -12,7 +19,7 @@
 }
 
 #popup-content {
-  background-color: rgba(51, 51, 51, 0.8); /* Dark background with 80% opacity */
+  background-color: var(--background-color);
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -113,7 +120,7 @@
 .equip-btn, .use-btn {
   padding: 2px 5px;
   margin-left: 5px;
-  background-color: #008CBA;
+  background-color: var(--main-color);
   color: white;
   border: none;
   border-radius: 3px;
@@ -125,7 +132,7 @@
   bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #008CBA;
+  background-color: var(--main-color);
   color: white;
   border: none;
   border-radius: 3px;
@@ -209,7 +216,7 @@ h2, h3 {
 #close-popup {
   margin-top: 20px;
   padding: 2px 5px;
-  background-color: #008CBA; /* Match the equip button color */
+  background-color: var(--main-color); /* Match the equip button color */
   color: white;
   border: none;
   border-radius: 3px;
@@ -218,5 +225,298 @@ h2, h3 {
 }
 
 #close-popup:hover {
-  background-color: #007B9E; /* Slightly darker on hover */
+  background-color: var(--secondary-color); /* Slightly darker on hover */
+}
+
+body.start {
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+.passage.start #start-container {
+  background-color: rgba(51, 51, 51, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+}
+
+.passage.start h1 {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+.passage.start h2 {
+  color: #ddd;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.passage.start form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.passage.start label {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.passage.start input[type="text"],
+.passage.start input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #333;
+  color: white;
+  box-sizing: border-box;
+}
+
+.passage.start input[type="text"]:focus,
+.passage.start input[type="file"]:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.passage.start button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.passage.start button:hover {
+  background-color: var(--secondary-color);
+}
+
+.passage.start #start-container {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.passage.start ::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.fade-out-down {
+  animation: fadeOutDown 0.5s ease-out forwards;
+}
+
+#codex-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#codex-popup-content {
+  background-color: rgba(51, 51, 51, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 1200px;
+  height: 90%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.tabs, .sub-tabs, .nested-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab-button, .sub-tab-button, .nested-tab-button {
+  padding: 10px 20px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin: 0 5px;
+}
+
+.tab-button.active, .sub-tab-button.active, .nested-tab-button.active {
+  background-color: var(--secondary-color);
+}
+
+.tab-button:hover, .sub-tab-button:hover, .nested-tab-button:hover {
+  background-color: var(--secondary-color);
+}
+
+.tab-content, .sub-tab-content, .nested-tab-content {
+  display: none;
+}
+
+.tab-content.active, .sub-tab-content.active, .nested-tab-content.active {
+  display: block;
+}
+
+.left-pane {
+  float: left;
+  width: 30%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.right-pane {
+  float: right;
+  width: 70%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.content-iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+}
+
+#close-codex-popup {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+#close-codex-popup:hover {
+  background-color: var(--secondary-color);
+}
+
+
+.sub-tabs, .nested-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  float: left;
+  margin-right: 20px;
+}
+
+.sub-tab-button, .nested-tab-button {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sub-tab-button.active, .nested-tab-button.active {
+  background-color: var(--main-color);
+}
+
+.sub-tab-content, .nested-tab-content {
+  display: none;
+}
+
+.sub-tab-content.active, .nested-tab-content.active {
+  display: block;
+}
+
+#map-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#map-popup-content {
+  background-color: rgba(51, 51, 51, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 1200px;
+  height: 90%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+#mapCanvas {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+}
+
+#close-map-popup {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+#close-map-popup:hover {
+  background-color: var(--secondary-color);
 }
