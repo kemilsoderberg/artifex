@@ -21,6 +21,7 @@ jobs:
 
       - name: Build Tweego Game
         run: |
+          chmod +x /home/runner/work/artifex/artifex/actions/tweego
           mkdir -p dist
           tweego -o ./dist/index.html src
 
