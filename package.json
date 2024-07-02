@@ -1,6 +1,0 @@
-{
-    "name": "artifex",
-    "scripts": {
-      "build": "tweego -o ./index.html"
-    }
-  }  
