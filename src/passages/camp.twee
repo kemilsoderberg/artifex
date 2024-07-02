@@ -33,7 +33,7 @@ It is time to fight!
 
 <<script>>
 setup.initGame = function() {
-    importScripts("phaser.js").then(function() {
+    importScripts("phaser.min.js").then(function() {
         class Example extends Phaser.Scene {
             constructor() {
                 super('Example');
