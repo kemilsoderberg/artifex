@@ -14,7 +14,7 @@ if (typeof State.variables.inventory === 'undefined') {
     State.variables.inventory = [];
 }
 if (typeof State.variables.profileImage === 'undefined') {
-    State.variables.profileImage = 'images/profile.webp'; // Default profile image
+    State.variables.profileImage = 'media/images/profile.webp'; // Default profile image
 }
 <</script>>
 
@@ -26,13 +26,13 @@ if (typeof State.variables.profileImage === 'undefined') {
 <</if>>
 <<if $dayIndex > -1>>
     <<if $timeIndex is 0>>
-        <img src="images/morning.png" style="max-width: 250px;">
+        <img src="media/images/morning.png" style="max-width: 250px;">
     <<elseif $timeIndex is 1>>
-        <img src="images/noon.png" style="max-width: 250px;">
+        <img src="media/images/noon.png" style="max-width: 250px;">
     <<elseif $timeIndex is 2>>
-        <img src="images/evening.png" style="max-width: 250px;">
+        <img src="media/images/evening.png" style="max-width: 250px;">
     <<elseif $timeIndex is 3>>
-        <img src="images/night.jpg" style="max-width: 250px;">
+        <img src="media/images/night.jpg" style="max-width: 250px;">
     <</if>>
 
     Time of day: <<print $time[$timeIndex]>>
@@ -41,7 +41,7 @@ if (typeof State.variables.profileImage === 'undefined') {
     <br><br>
     You are <span id="health-status"><<print $health[$healthIndex]>></span>
     <<addclass "#health-status" $healthClass>>
-    <img src="images/borders/fade-divider/divider-fade-001.png" class="divider">
+    <img src="media/images/borders/fade-divider/divider-fade-001.png" class="divider">
     <a href="#" class="link-internal" id="characterLink">Character</a> <br> <br>
     <a href="#" class="link-internal" id="inventoryLink">Inventory</a> <br> <br>
     <<if $codexUnlocked is true>>
@@ -51,7 +51,7 @@ if (typeof State.variables.profileImage === 'undefined') {
     <a href="#" class="link-internal" id="mapLink">Map</a> <br> <br>
     <</if>>
     <a href="#" class="link-internal" id="debugLink">Debug menu</a>
-    <img src="images/borders/fade-divider/divider-fade-001.png" class="divider">
+    <img src="media/images/borders/fade-divider/divider-fade-001.png" class="divider">
 <</if>>
 <</nobr>>
 

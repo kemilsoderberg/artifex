@@ -17,7 +17,7 @@ $('body').on('click', '#mapLink', function(ev) {
     const canvas = document.getElementById('mapCanvas');
     const ctx = canvas.getContext('2d');
     const mapImage = new Image();
-    mapImage.src = 'images/region-map.webp';
+    mapImage.src = 'media/images/region-map.webp';
   
     let isDragging = false;
     let startX, startY;

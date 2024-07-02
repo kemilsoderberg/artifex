@@ -115,7 +115,7 @@ window.updateInventoryDisplay = function() {
             slotElement.css('background-color', 'rgba(0, 0, 0, 0.75)'); // Add semi-transparent background
         } else {
             slotElement.html(`<div class="slot-type">${slot.label}</div>`);
-            slotElement.css('background-image', 'url("images/items/slot.png")'); // Add placeholder image
+            slotElement.css('background-image', 'url("media/images/items/slot.png")'); // Add placeholder image
             slotElement.css('background-color', 'transparent'); // Remove semi-transparent background
         }
     }
