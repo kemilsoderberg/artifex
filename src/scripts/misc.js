@@ -22,9 +22,6 @@ $('body').on('click', 'button:contains("Submit")', function(ev) {
     State.variables.pnO = $('input[name="pnO"]').val();
     State.variables.formal = $('input[name="formal"]').val();
     State.variables.aux = $('input[name="aux"]:checked').val();
-
-    // Navigate to the next passage
-    Engine.play('Crash');
 });
 
 // Listen for click event on the "Debug" link using event delegation
@@ -70,4 +67,39 @@ $('body').on('click', '#debugLink', function(ev) {
     $('#close-popup').on('click', function() {
         $('#popup').remove();
     });
+});
+
+// Define the rollList macro
+Macro.add('rollList', {
+    handler: function () {
+        const choices = this.args[0]; // Number of choices
+        const options = this.args.slice(1); // List of options
+
+        if (choices > options.length) {
+            return this.error('Not enough options provided for the number of choices.');
+        }
+
+        // Shuffle the options array
+        const shuffledOptions = options.sort(() => 0.5 - Math.random());
+
+        // Select the first 'choices' number of options
+        const selectedOptions = shuffledOptions.slice(0, choices);
+
+        // Generate the HTML for the roll list
+        let html = '<ul>';
+        selectedOptions.forEach(option => {
+            html += `<li><a href="javascript:void(0);" class="roll-option">${option}</a></li>`;
+        });
+        html += '</ul>';
+
+        // Output the HTML
+        $(this.output).wiki(html);
+
+        // Add click event listeners to the options
+        $('.roll-option').on('click', function () {
+            const selectedOption = $(this).text();
+            alert(`You selected: ${selectedOption}`);
+            // Perform any additional actions based on the selected option
+        });
+    }
 });

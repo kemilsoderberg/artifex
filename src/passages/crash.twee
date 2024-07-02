@@ -1,15 +1,18 @@
 :: Crash
-You awaken in a smoldering crater, the aftermath of your own catastrophic descent. 
-The air is thick with the scent of scorched earth and the acrid tang of burnt metal. 
-Every fiber of your being throbs with a relentless, all-encompassing pain, as if the very essence of your existence has been shattered and reassembled in the most agonizing manner possible.
+You awaken in a smoldering crater, the aftermath of your own catastrophic descent. The air is thick with the scent of scorched earth and the acrid tang of burnt metal. Every fiber of your being throbs with a relentless, all-encompassing pain, as if the very essence of your existence has been shattered and reassembled in the most agonizing manner possible.
 
 [[Look around]]
+
+<<set $healthIndex to 0>>
+<<set $intro to false>>
+<<set $location to "Unknown">> 
+<<set $dayIndex to 0>>
 
 <<shakescreen 2s>>
 
 :: Look around
-As your eyes adjust to the dim light filtering through the dust and debris, you notice a section of the crater's edge that appears slightly less treacherous. 
-The incline there is gentler, offering a potential escape from this desolate pit. The surrounding landscape is a bleak expanse, but that one spot might just be your way out.
+As your eyes adjust to the dim light filtering through the dust and debris, you notice a section of the crater's edge that appears slightly less treacherous. The incline there is gentler, offering a potential escape from this desolate pit. The surrounding landscape is a bleak expanse, but that one spot might just be your way out.
 
-[[Climb|Camp][$dayIndex to 0]]
+[[Climb|Camp]]
+
 [[Go back|Crash]]

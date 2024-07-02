@@ -10,10 +10,11 @@ The sun is setting, casting a warm glow over the camp.
 The fire is warm, and the stars are bright.
 <</if>>
 
-[[Sleep]] [[Work]] [[Explore]]
+[[Sleep]] [[Fight]] [[Explore]] [[Unlocks]]
 
 <<set $playerX = 50>> <!-- Player X position in percentage -->
 <<set $playerY = 50>> <!-- Player Y position in percentage -->
+<<set $location to "Camp">>
 
 :: Sleep
 Good night!
@@ -24,19 +25,15 @@ Good night!
 
 [[Camp]]
 
-:: Work
-Select which work needs to be done:
-[[Gather food]]
-[[Chop wood]]
-
-[[Back to Camp!|Camp]]
-
+:: Fight
 
 :: Explore
-Time to explore!
 
-[[Explore around the camp site|Camp Exploration]]
-<<if $exploration > 0 >>
-    [[Explore in the forest]]
-<</if>>
-[[Back to Camp!|Camp]]
+:: Unlocks
+
+[[Unlock Map->Unlocks][$mapUnlocked = true]] [[Lock Map->Unlocks][$mapUnlocked = false]]
+
+[[Unlock Codex->Unlocks][$codexUnlocked = true]] [[Lock Codex->Unlocks][$codexUnlocked = false]]
+
+
+[[Back to camp|Camp]]

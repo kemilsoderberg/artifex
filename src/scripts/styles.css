@@ -1,6 +1,7 @@
 :root {
   --main-color: #00785E;
   --secondary-color: #002A2A;
+  --light-color: #00b8a0;
   --background-color: rgba(51, 51, 51, 0.8);
   --text-color: white;
 }
@@ -178,7 +179,7 @@
 .profile-background {
   width: 270px;
   height: 270px;
-  background-image: url('images/borders/Border/panel-border-024.png');
+  /* background-image: url('images/borders/Border/panel-border-024.png');*/
   background-size: cover;
   background-position: center;
   border-radius: 50%;
@@ -291,7 +292,7 @@ body.start {
 .passage.start input[type="text"]:focus,
 .passage.start input[type="file"]:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: var(--main-color);
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
@@ -529,18 +530,19 @@ body.start {
 
 /* Style for internal links */
 a.link-internal {
-  color: var(--main-color); /* Change the link color */
-  text-decoration: none; /* Remove underline */
-  padding: 5px 10px; /* Add padding */
-  border: 7px solid transparent; /* Set border width */
-  border-image: url('images/borders/Border/panel-border-000.png') 30 round; /* Apply border image */
-  display: inline-block; /* Make the link behave like a block element */
+  color: var(--secondary-color);
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 7px solid transparent;
+  border-image: url('images/borders/Border/panel-border-000.png') 30 round;
+  display: inline-block;
+  background-color: var(--light-color); /* Add this line to set the background color */
 }
 
 /* Style for internal links on hover */
 a.link-internal:hover {
-  color: var(--secondary-color); /* Change color on hover */
-  background-color: rgba(255, 255, 255, 0.1); /* Add background color on hover */
+  color: var(--light-color); /* Change color on hover */
+  background-color: var(--secondary-color); /* Add background color on hover */
 }
 
 /* Style for external links */
@@ -555,7 +557,7 @@ a.link-external {
 
 /* Style for external links on hover */
 a.link-external:hover {
-  color: var(--secondary-color); /* Change color on hover */
+  color: var(--light-color); /* Change color on hover */
   background-color: rgba(255, 255, 255, 0.1); /* Add background color on hover */
 }
 
@@ -611,4 +613,45 @@ a.link-external:hover {
   height: 50px; /* Adjust the size as needed */
   border-radius: 50%;
   object-fit: cover;
+}
+
+/* Global button styles */
+button {
+  background-color: var(--main-color);
+  color: white;
+  border: 7px solid transparent; /* Set the border width */
+  border-image: url('images/borders/Border/panel-border-001.png') 30 round; /* Apply the border image */
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+}
+
+/* Button hover effect */
+button:hover {
+  background-color: var(--secondary-color); /* Darker green on hover */
+}
+
+/* Button active effect */
+button:active {
+  background-color: #1a381b; /* Even darker green when clicked */
+  box-shadow: 0 5px #666; /* Add shadow */
+  transform: translateY(4px); /* Move button down */
+}
+
+/* Additional styles for the select element */
+select {
+  -webkit-appearance: none; /* Remove default appearance */
+  -moz-appearance: none; /* Remove default appearance */
+  appearance: none; /* Remove default appearance */
+  background-image: url('images/kbm/mouse_left_outline.png'); /* Add custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  background-color: var(--main-color);
+  color: white;
+  border: 7px solid transparent; /* Set the border width */
+  border-image: url('images/borders/Border/panel-border-001.png') 30 round; /* Apply the border image */
+  border-radius: 2px;
+  padding-right: 40px; /* Space for the custom arrow */
 }

@@ -6,7 +6,7 @@
 }
 
 :: StoryTitle
-Artifex Pyrophilis
+Artifex
 
 :: StoryInit
 <<script>>
@@ -19,6 +19,11 @@ if (typeof State.variables.profileImage === 'undefined') {
 <</script>>
 
 :: StoryCaption
+<<nobr>>
+<<set $healthClass to "health-" + $health[$healthIndex]>>
+<<if def $location>>
+    Location: $location
+<</if>>
 <<if $dayIndex > -1>>
     <<if $timeIndex is 0>>
         <img src="images/morning.png" style="max-width: 250px;">
@@ -30,20 +35,25 @@ if (typeof State.variables.profileImage === 'undefined') {
         <img src="images/night.jpg" style="max-width: 250px;">
     <</if>>
 
-    <<set $healthClass to "health-" + $health[$healthIndex]>>
     Time of day: <<print $time[$timeIndex]>>
+    <br><br>
     Day $dayIndex
-
+    <br><br>
     You are <span id="health-status"><<print $health[$healthIndex]>></span>
     <<addclass "#health-status" $healthClass>>
     <img src="images/borders/fade-divider/divider-fade-001.png" class="divider">
-    <a href="#" class="link-internal" id="characterLink">Character</a>
-    <a href="#" class="link-internal" id="inventoryLink">Inventory</a>
-    <a href="#" class="link-internal" id="codexLink">Codex</a>
-    <a href="#" class="link-internal" id="mapLink">Map</a>
+    <a href="#" class="link-internal" id="characterLink">Character</a> <br> <br>
+    <a href="#" class="link-internal" id="inventoryLink">Inventory</a> <br> <br>
+    <<if $codexUnlocked is true>>
+    <a href="#" class="link-internal" id="codexLink">Codex</a> <br> <br>
+    <</if>>
+    <<if $mapUnlocked is true>>
+    <a href="#" class="link-internal" id="mapLink">Map</a> <br> <br>
+    <</if>>
     <a href="#" class="link-internal" id="debugLink">Debug menu</a>
     <img src="images/borders/fade-divider/divider-fade-001.png" class="divider">
 <</if>>
+<</nobr>>
 
 :: Start [start]
 <div id="start-container">
@@ -73,12 +83,12 @@ if (typeof State.variables.profileImage === 'undefined') {
   <div class="input-group">
     <img id="profile-preview" src="" alt="Profile Image Preview" style="display: none; max-width: 100%; height: auto; border-radius: 10px; margin-top: 10px;">
   </div>
-  <<button "Submit" "Crash">><</button>>
+  <<button "Submit" "Crash Location">><</button>>
 </div>
 
-
+<<set $intro to true>>
 <<set $time to ["morning", "noon", "evening", "night"]>>
 <<set $health to ["dying", "wounded", "bruised", "fine", "good", "divine"]>>
-<<set $healthIndex to 0>>
+<<set $healthIndex to 2>>
 <<set $timeIndex to 0>>
-<<set $dayIndex to -1>>
+<<set $dayIndex to -2>>
