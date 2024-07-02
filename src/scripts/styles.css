@@ -124,7 +124,7 @@
   background-color: var(--main-color);
   color: white;
   border: 7px solid transparent; /* Set the border width */
-  border-image: url('media/images/borders/Border/panel-border-001.png') 30 round; /* Apply the border image */
+  border-image: url('media/images/borders/border/panel-border-001.png') 30 round; /* Apply the border image */
   border-radius: 3px;
   cursor: pointer;
   text-align: center;
@@ -139,7 +139,7 @@
   background-color: var(--main-color);
   color: white;
   border: 7px solid transparent; /* Set the border width */
-  border-image: url('media/images/borders/Border/panel-border-001.png') 30 round; /* Apply the border image */
+  border-image: url('media/images/borders/border/panel-border-001.png') 30 round; /* Apply the border image */
   border-radius: 2px;
   cursor: pointer;
   text-align: center;
@@ -179,7 +179,7 @@
 .profile-background {
   width: 270px;
   height: 270px;
-  /* background-image: url('media/images/borders/Border/panel-border-024.png');*/
+  /* background-image: url('media/images/borders/border/panel-border-024.png');*/
   background-size: cover;
   background-position: center;
   border-radius: 50%;
@@ -534,7 +534,7 @@ a.link-internal {
   text-decoration: none;
   padding: 5px 10px;
   border: 7px solid transparent;
-  border-image: url('media/images/borders/Border/panel-border-000.png') 30 round;
+  border-image: url('media/images/borders/border/panel-border-000.png') 30 round;
   display: inline-block;
   background-color: var(--light-color); /* Add this line to set the background color */
 }
@@ -551,7 +551,7 @@ a.link-external {
   text-decoration: none; /* Remove underline */
   padding: 5px 10px; /* Add padding */
   border: 2px solid transparent; /* Set border width */
-  border-image: url('media/images/borders/Border/panel-border-000.png') 30 round; /* Apply border image */
+  border-image: url('media/images/borders/border/panel-border-000.png') 30 round; /* Apply border image */
   display: inline-block; /* Make the link behave like a block element */
 }
 
@@ -620,7 +620,7 @@ button {
   background-color: var(--main-color);
   color: white;
   border: 7px solid transparent; /* Set the border width */
-  border-image: url('media/images/borders/Border/panel-border-001.png') 30 round; /* Apply the border image */
+  border-image: url('media/images/borders/border/panel-border-001.png') 30 round; /* Apply the border image */
   border-radius: 2px;
   cursor: pointer;
   text-align: center;
@@ -651,7 +651,7 @@ select {
   background-color: var(--main-color);
   color: white;
   border: 7px solid transparent; /* Set the border width */
-  border-image: url('media/images/borders/Border/panel-border-001.png') 30 round; /* Apply the border image */
+  border-image: url('media/images/borders/border/panel-border-001.png') 30 round; /* Apply the border image */
   border-radius: 2px;
   padding-right: 40px; /* Space for the custom arrow */
 }
