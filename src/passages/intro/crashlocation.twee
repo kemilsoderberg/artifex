@@ -108,7 +108,7 @@
     <h1>Select your landing location</h1>
     <div class="container">
         <div class="choice-box" onclick="expandBox(this)">
-            <img src="media/images/evening.png" alt="Humans">
+            <img src="media/images/riverine_forest.jpg" alt="Riverine Forest">
             <p>Riverine Forest</p>
             <div class="expanded-content">
                 <h3>Riverine Forest</h3>
@@ -117,7 +117,7 @@
             </div>
         </div>
         <div class="choice-box" onclick="expandBox(this)">
-            <img src="media/images/noon.png" alt="Orcs">
+            <img src="media/images/rainforest.jpg" alt="Rainforest">
             <p>Rainforest</p>
             <div class="expanded-content">
                 <h3>Rainforest</h3>
@@ -126,7 +126,7 @@
             </div>
         </div>
         <div class="choice-box" onclick="expandBox(this)">
-            <img src="media/images/night.jpg" alt="Elves">
+            <img src="media/images/savannah.jpg" alt="Savannah">
             <p>Savannah</p>
             <div class="expanded-content">
                 <h3>Savannah</h3>
@@ -135,7 +135,7 @@
             </div>
         </div>
         <div class="choice-box" onclick="expandBox(this)">
-            <img src="media/images/morning.png" alt="Dwarves">
+            <img src="media/images/islands.jpg" alt="Islands">
             <p>Islands</p>
             <div class="expanded-content">
                 <h3>Islands</h3>

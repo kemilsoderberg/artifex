@@ -26,11 +26,11 @@ if (typeof State.variables.profileImage === 'undefined') {
 <</if>>
 <<if $dayIndex > -1>>
     <<if $timeIndex is 0>>
-        <img src="media/images/morning.png" style="max-width: 250px;">
+        <img src="media/images/morning.jpg" style="max-width: 250px;">
     <<elseif $timeIndex is 1>>
-        <img src="media/images/noon.png" style="max-width: 250px;">
+        <img src="media/images/noon.jpg" style="max-width: 250px;">
     <<elseif $timeIndex is 2>>
-        <img src="media/images/evening.png" style="max-width: 250px;">
+        <img src="media/images/evening.jpg" style="max-width: 250px;">
     <<elseif $timeIndex is 3>>
         <img src="media/images/night.jpg" style="max-width: 250px;">
     <</if>>
