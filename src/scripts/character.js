@@ -2,11 +2,6 @@
 $('body').on('click', '#characterLink', function(ev) {
   ev.preventDefault(); // Prevent default link behavior
 
-  let first_name = State.variables.first_name;
-  let last_name = State.variables.last_name;
-  let formal = State.variables.formal;
-  let pnS = State.variables.pnS;
-  let pnO = State.variables.pnO;
   let health = State.variables.health;
   let healthIndex = State.variables.healthIndex;
 

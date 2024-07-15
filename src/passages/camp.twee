@@ -25,84 +25,9 @@ Good night!
 
 [[Camp]]
 
-:: Fight
-
-It is time to fight!
-
-<div id="game-container"></div>
-
-<<script>>
-setup.initGame = function() {
-    importScripts("phaser.min.js").then(function() {
-        class Example extends Phaser.Scene {
-            constructor() {
-                super('Example');
-            }
-
-            preload() {
-                this.load.setBaseURL('https://labs.phaser.io');
-                this.load.image('sky', 'assets/skies/space3.png');
-                this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-                this.load.image('red', 'assets/particles/red.png');
-            }
-
-            create() {
-                this.add.image(400, 300, 'sky');
-
-                const particles = this.add.particles(0, 0, 'red', {
-                    speed: 100,
-                    scale: { start: 1, end: 0 },
-                    blendMode: 'ADD'
-                });
-
-                const logo = this.physics.add.image(400, 100, 'logo');
-
-                logo.setVelocity(100, 200);
-                logo.setBounce(1, 1);
-                logo.setCollideWorldBounds(true);
-
-                particles.startFollow(logo);
-            }
-        }
-
-        const config = {
-            type: Phaser.AUTO,
-            width: 800,
-            height: 600,
-            parent: 'game-container',
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: { y: 200 }
-                }
-            },
-            scene: Example
-        };
-
-        setup.game = new Phaser.Game(config); // Assign to setup.game
-    }).catch(function(error) {
-        console.error("Error loading Phaser.js:", error);
-    });
-};
-
-setup.initGame(); // Call the function to initialize the game
-<</script>>
-
-Leave down here back to camp
-
-<<link "Camp">>
-<<script>>
-if (setup.game) {
-    setup.game.destroy(true); // Destroy the game instance
-    setup.game = null; // Clear the reference
-}
-$('#game-container').remove(); // Remove the game container from the DOM
-<</script>>
-<<goto "Camp">>
-<</link>>
-
-
 :: Explore
+
+[[Camp]]
 
 :: Unlocks
 

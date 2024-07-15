@@ -1,7 +1,7 @@
 :root {
   --main-color: #00785E;
   --secondary-color: #002A2A;
-  --light-color: #00b8a0;
+  --light-color: #019e5c;
   --background-color: rgba(51, 51, 51, 0.8);
   --text-color: white;
 }
@@ -654,4 +654,15 @@ select {
   border-image: url('media/images/borders/border/panel-border-001.png') 30 round; /* Apply the border image */
   border-radius: 2px;
   padding-right: 40px; /* Space for the custom arrow */
+}
+
+.fullscreen-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 1000;
+  display: none;
 }

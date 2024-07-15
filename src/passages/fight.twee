@@ -1,0 +1,103 @@
+:: Fight
+<<script>>
+document.getElementById("ui-bar").className = "stowed";
+<</script>>
+<<nobr>> 
+<html lang="en"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<style> 
+#passages { max-width: 1500px; height: 900px; margin-left: auto; margin-right: auto; } 
+
+.icon-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid transparent;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    cursor: pointer;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+.image-button { 
+    background-color: rgba(0, 0, 0, 0.75); 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    position: absolute; 
+} 
+
+.image-button:hover { 
+    background-color: rgba(0, 0, 0, 0.95); 
+} 
+
+#versus { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    font-size: 36px; 
+    color: white; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+} 
+
+.icon-button.marked {
+    border-color: red;
+    box-shadow: 0 0 15px rgba(255,0,0,0.7);
+}
+
+.icon-button::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.icon-button.marked::before {
+    content: 'TARGET';
+    opacity: 1;
+}
+</style> 
+</head>
+
+<body> 
+<div id="main-container" style="width: 1500px; height: 900px; position: relative;"> 
+    <img src="media/images/riverine_forest.jpg" alt="Background Image" style="width: 100%; height: 100%; object-fit: cover;">        
+<!-- Character and Follower icons -->
+    <button id="character" class="icon-button" style="top: 50%; left: 20%; background-image: url('media/images/profile.webp');" onclick="markIcon('character', event)"></button>
+    <button id="follower1" class="icon-button" style="top: 30%; left: 20%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower1', event)"></button>
+    <button id="follower2" class="icon-button" style="top: 40%; left: 10%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower2', event)"></button>
+    <button id="follower3" class="icon-button" style="top: 60%; left: 10%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower3', event)"></button>
+    <button id="follower4" class="icon-button" style="top: 70%; left: 20%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower4', event)"></button>
+
+    <!-- Enemy icons -->
+    <button id="enemy1" class="icon-button" style="top: 30%; right: 10%; background-image: url('media/images/enemy.webp');" onclick="markIcon('enemy1', event)"></button>
+    <button id="enemy2" class="icon-button" style="top: 50%; right: 10%; background-image: url('media/images/enemy.webp');" onclick="markIcon('enemy2', event)"></button>
+    <button id="enemy3" class="icon-button" style="top: 70%; right: 10%; background-image: url('media/images/enemy.webp');" onclick="markIcon('enemy3', event)"></button>
+
+    
+    <!-- Action buttons -->
+    <button class="image-button" style="bottom: 10%; left: 30%;" onclick="attack()">Attack</button>
+</div>
+</body>
+</html>
+
+<</nobr>>
+<<link "Camp">>
+<<script>>
+document.getElementById("ui-bar").classList.remove("stowed");
+<</script>>
+<<goto "Camp">>
+<</link>>

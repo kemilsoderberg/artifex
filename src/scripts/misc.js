@@ -45,7 +45,7 @@ $('body').on('click', '#debugLink', function(ev) {
     // Add event listeners for the debug buttons
     $('#add-helmet').on('click', function() {
         // Create the helmet item
-        const helmet = new Item(1, "Helmet", "head", {perception: -2, defense: 2}, "media/images/items/helmet.png");
+        const helmet = new Item(1, "Helmet", "head", {perception: -2, defense: 2}, "images/items/helmet.png");
         State.variables.inventory.push(helmet);
         equipItem(1);
         updateAttributes();
