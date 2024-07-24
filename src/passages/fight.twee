@@ -1,40 +1,58 @@
 :: Fight
+<<nobr>> 
+<<set $enemyGoblins to random(2, 15)>>
+<<set $enemyArchers to random(2, 15)>>
 <<script>>
 document.getElementById("ui-bar").className = "stowed";
 <</script>>
-<<nobr>> 
 <html lang="en"> 
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <style> 
-#passages { max-width: 1500px; height: 900px; margin-left: auto; margin-right: auto; } 
-
-.icon-button {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    border: 3px solid transparent;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    cursor: pointer;
-    position: absolute;
-    transition: all 0.3s ease;
-}
-
-.image-button { 
-    background-color: rgba(0, 0, 0, 0.75); 
-    color: white; 
-    padding: 10px 20px; 
-    border: none; 
-    cursor: pointer; 
-    border-radius: 5px; 
-    position: absolute; 
+#passages { 
+    max-width: 1900px; 
+    height: 900px; 
+    margin-left: 0; 
+    margin-right: 0; 
 } 
 
-.image-button:hover { 
-    background-color: rgba(0, 0, 0, 0.95); 
+#game-container {
+    display: flex;
+    width: 1900px;
+    height: 900px;
+}
+
+#main-content {
+    display: flex;
+    flex-direction: column;
+    width: 1300px;
+    height: 900px;
+}
+
+#main-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); 
+    grid-template-rows: repeat(9, 1fr); 
+    width: 100%;
+    height: 850px; /* Adjusted height to leave space for buttons */
+    position: relative;
+    flex-shrink: 0; 
+    border: 7px solid transparent; /* Set the border width */
+    border-image: url('media/images/borders/border/panel-border-001.png') 30 round; /* Apply the border image */
+    border-radius: 2px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 10px; /* Adds some space between buttons */
+    height: 50px; /* Height for the button container */
+}
+
+.image-button {  
+    padding: 10px 20px; 
 } 
 
 #versus { 
@@ -47,13 +65,80 @@ document.getElementById("ui-bar").className = "stowed";
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
 } 
 
+#unit-info {
+    width: 150px;
+    height: 850px;
+    padding: 20px;
+    margin-left: 50px;
+    background-color: black;
+    display: none;
+    border: 7px solid transparent; 
+    border-image: url('media/images/borders/border/panel-border-001.png') 30 round;
+    border-radius: 2px;
+    flex-shrink: 0; 
+}
+
+#unit-info img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+#player-info {
+    width: 150px;
+    height: 850px;
+    padding: 20px;
+    margin-right: 50px;
+    background-color: black;
+    display: none;
+    border: 7px solid transparent; 
+    border-image: url('media/images/borders/border/panel-border-001.png') 30 round;
+    border-radius: 2px;
+    flex-shrink: 0; 
+}
+
+#player-info img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url('media/images/riverine_forest.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.icon-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid transparent;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    position: relative;
+}
+
 .icon-button.marked {
     border-color: red;
     box-shadow: 0 0 15px rgba(255,0,0,0.7);
 }
 
-.icon-button::before {
-    content: '';
+.icon-button::after {
+    content: 'TARGET';
     position: absolute;
     top: -25px;
     left: 50%;
@@ -65,29 +150,109 @@ document.getElementById("ui-bar").className = "stowed";
     transition: opacity 0.3s ease;
 }
 
-.icon-button.marked::before {
-    content: 'TARGET';
+.icon-button.marked::after {
     opacity: 1;
+}
+
+.unit {
+    background-color: rgba(255, 0, 0, 0.5);
+    border: 2px solid black;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    grid-column: span 1;
+    grid-row: span 1;
 }
 </style> 
 </head>
 
 <body>
 <script>
+(function () {
     let target = null;
+    let unitsData = [];
+    let showUnitInfo = true;
 
-    function markIcon(id, event) {
-        event.stopPropagation();
+function markIcon(id, event) {
+    event.stopPropagation();
 
-        const buttons = document.querySelectorAll('.icon-button');
-        buttons.forEach(button => button.classList.remove('marked'));
+    const buttons = document.querySelectorAll('.icon-button');
+    buttons.forEach(button => button.classList.remove('marked'));
 
-        const button = document.getElementById(id);
-        button.classList.add('marked');
+    const button = document.getElementById(id);
+    button.classList.add('marked');
 
-        target = id;
-        console.log(`Target set to: ${target}`);
+    target = id;
+    console.log(`Target set to: ${target}`);
+
+    const unitData = unitsData.find(unit => unit.id === id);
+    if (unitData) {
+        updateUnitInfo(unitData);
     }
+}
+
+function updateUnitInfo(unit) {
+    const unitInfo = document.getElementById('unit-info');
+    let basicInfo = `
+        <h2>${unit.name}</h2>
+        <img src="${unit.image}" alt="${unit.type}">
+        <p><strong>Health:</strong> ${unit.health}</p>
+        <p><strong>Armor:</strong> ${unit.armor}</p>
+        <p><strong>Weapon:</strong> ${unit.weapon}</p>
+    `;
+
+    if (showUnitInfo) {
+        basicInfo += `
+            <br>
+            <p><strong>Speed: </strong> ${unit.attributes.speed}</p>
+            <p><strong>Strength: </strong> ${unit.attributes.strength}</p>
+            <p><strong>Agility: </strong> ${unit.attributes.agility}</p>
+            <p><strong>Constitution: </strong> ${unit.attributes.constitution}</p>
+            <p><strong>Perception: </strong> ${unit.attributes.perception}</p>
+            <p><strong>Precision: </strong> ${unit.attributes.precision}</p>
+            <p><strong>Defense: </strong> ${unit.attributes.defense}</p>
+            <p><strong>Luck: </strong> ${unit.attributes.luck}</p>
+        `;
+    }
+
+    unitInfo.style.display = 'block'; 
+    unitInfo.innerHTML = basicInfo;
+}
+
+function playerInfo() {
+    const playerInfo = document.getElementById('player-info');
+    const attributes = SugarCube.State.variables.attributes;
+
+    let basicInfo = `
+        <h2>${SugarCube.State.variables.first_name}</h2>
+        <img src="${SugarCube.State.variables.profileImage}">
+        <p><strong>Health:</strong> ${SugarCube.State.variables.health[SugarCube.State.variables.healthIndex]}</p>
+        <br>
+        <p><strong>Speed: </strong> ${attributes.speed}</p>
+        <p><strong>Strength: </strong> ${attributes.strength}</p>
+        <p><strong>Agility: </strong> ${attributes.agility}</p>
+        <p><strong>Constitution: </strong> ${attributes.constitution}</p>
+        <p><strong>Perception: </strong> ${attributes.perception}</p>
+        <p><strong>Precision: </strong> ${attributes.precision}</p>
+        <p><strong>Defense: </strong> ${attributes.defense}</p>
+        <p><strong>Luck: </strong> ${attributes.luck}</p>
+    `;
+
+    playerInfo.style.display = 'block'; 
+    playerInfo.innerHTML = basicInfo;
+}
+
+
+function clearUnitInfo() {
+    const unitInfo = document.getElementById('unit-info');
+    unitInfo.style.display = 'none';
+    unitInfo.innerHTML = '';
+}
+
 
     function attack() {
         if (target) {
@@ -98,36 +263,147 @@ document.getElementById("ui-bar").className = "stowed";
     }
 
     document.addEventListener('click', function(event) {
-        if (!event.target.classList.contains('icon-button')) {
+        if (!event.target.classList.contains('icon-button') && !event.target.classList.contains('image-button')) {
             const buttons = document.querySelectorAll('.icon-button');
             buttons.forEach(button => button.classList.remove('marked'));
 
             target = null;
-            console.log('Target cleared');
+            console.log('Mål borttaget');
+            clearUnitInfo();
         }
     });
+
+
+    async function fetchJSONData() {
+        try {
+            const response = await fetch('units.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data.units;
+        } catch (error) {
+            console.error("Kunde inte hämta data:", error);
+            return [];
+        }
+    }
+
+    function applyEffects(attributes, effects) {
+        for (const [key, value] of Object.entries(effects)) {
+            if (attributes.hasOwnProperty(key)) {
+                attributes[key] += value;
+            }
+        }
+    }
+
+function generateRandomUnit(units, unitType) {
+    const filteredUnits = units.filter(u => u.type === unitType);
+    const unitTypeData = filteredUnits[Math.floor(Math.random() * filteredUnits.length)];
+    const name = unitTypeData.namePool[Math.floor(Math.random() * unitTypeData.namePool.length)];
+    const attributes = {};
+    for (const attr in unitTypeData.attributes) {
+        const min = unitTypeData.attributes[attr].min;
+        const max = unitTypeData.attributes[attr].max;
+        attributes[attr] = Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    const health = unitTypeData.health[Math.floor(Math.random() * (4 - 1 + 1)) + 1]; 
+
+    const armor = unitTypeData.armor[Math.floor(Math.random() * unitTypeData.armor.length)];
+    const weapon = unitTypeData.weapon[Math.floor(Math.random() * unitTypeData.weapon.length)];
+
+    applyEffects(attributes, armor.effects);
+    applyEffects(attributes, weapon.effects);
+
+    return { 
+        type: unitTypeData.type, 
+        name, 
+        attributes, 
+        health, 
+        image: unitTypeData.image, 
+        armor: armor.type, 
+        weapon: weapon.type 
+    };
+}
+
+
+    function getRandomPosition(occupiedPositions) {
+        let position;
+        do {
+            const row = Math.floor(Math.random() * 9) + 1; 
+            const column = Math.floor(Math.random() * 5) + 6; 
+            position = `${row}-${column}`;
+        } while (occupiedPositions.has(position));
+        occupiedPositions.add(position);
+        return position;
+    }
+
+    async function placeUnits() {
+        const units = await fetchJSONData();
+        const gameBoard = document.getElementById('main-container');
+        const unitTypes = {
+            "goblin": Number(window.SugarCube.State.variables.enemyGoblins),
+            "archer": Number(window.SugarCube.State.variables.enemyArchers)
+        };
+        const occupiedPositions = new Set();
+
+        for (const [unitType, count] of Object.entries(unitTypes)) {
+            for (let i = 0; i < count; i++) {
+                const unit = generateRandomUnit(units, unitType);
+                const position = getRandomPosition(occupiedPositions);
+                const [row, column] = position.split('-').map(Number);
+
+                const unitElement = document.createElement('button');
+                unitElement.className = 'icon-button';
+                unitElement.style.gridRowStart = row;
+                unitElement.style.gridColumnStart = column;
+                unitElement.style.backgroundImage = `url('${unit.image}')`;
+                unitElement.onclick = (event) => markIcon(`${unitType}-${i}`, event);
+                unitElement.id = `${unitType}-${i}`;
+
+                gameBoard.appendChild(unitElement);
+
+                unitsData.push({ ...unit, id: `${unitType}-${i}` });
+            }
+        }
+    }
+
+    $(document).ready(function() {
+        placeUnits();
+        playerInfo()
+    });
+
+    window.markIcon = markIcon;
+    window.attack = attack;
+})();
 </script>
-<div id="main-container" style="width: 1500px; height: 900px; position: relative;"> 
-    <img src="media/images/riverine_forest.jpg" alt="Background Image" style="width: 100%; height: 100%; object-fit: cover;">        
-<!-- Character and Follower icons -->
-    <button id="character" class="icon-button" style="top: 50%; left: 20%; background-image: url('media/images/profile.webp');" onclick="markIcon('character', event)"></button>
-    <button id="follower1" class="icon-button" style="top: 30%; left: 20%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower1', event)"></button>
-    <button id="follower2" class="icon-button" style="top: 40%; left: 10%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower2', event)"></button>
-    <button id="follower3" class="icon-button" style="top: 60%; left: 10%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower3', event)"></button>
-    <button id="follower4" class="icon-button" style="top: 70%; left: 20%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower4', event)"></button>
 
-    <!-- Enemy icons -->
-    <button id="enemy1" class="icon-button" style="top: 30%; right: 10%; background-image: url('media/images/enemy.webp');" onclick="markIcon('enemy1', event)"></button>
-    <button id="enemy2" class="icon-button" style="top: 50%; right: 10%; background-image: url('media/images/enemy.webp');" onclick="markIcon('enemy2', event)"></button>
-    <button id="enemy3" class="icon-button" style="top: 70%; right: 10%; background-image: url('media/images/enemy.webp');" onclick="markIcon('enemy3', event)"></button>
-
-    
-    <!-- Action buttons -->
-    <button class="image-button" style="bottom: 10%; left: 30%;" onclick="attack()">Attack</button>
+<div id="game-container">
+    <div id="player-info"></div>
+    <div id="main-content">
+        <div id="main-container">
+            <div class="background"></div>
+            <!-- Character and Follower icons -->
+            <button id="character" class="icon-button" style="top: 50%; left: 20%; background-image: url('media/images/profile.webp');" onclick="markIcon('character', event)"></button>
+            <button id="follower1" class="icon-button" style="top: 30%; left: 20%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower1', event)"></button>
+            <button id="follower2" class="icon-button" style="top: 40%; left: 10%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower2', event)"></button>
+            <button id="follower3" class="icon-button" style="top: 60%; left: 10%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower3', event)"></button>
+            <button id="follower4" class="icon-button" style="top: 70%; left: 20%; background-image: url('media/images/follower.webp');" onclick="markIcon('follower4', event)"></button>
+        </div>
+        <div class="button-container">
+            <button class="image-button" onclick="move()">Move</button>
+            <button class="image-button" onclick="attack()">Attack</button>
+            <button class="image-button" onclick="lineAttack()">Line Attack</button>
+            <button class="image-button" onclick="coneAttack()">Cone Attack</button>
+            <button class="image-button" onclick="aoe()">Area Attack</button>
+            <button class="image-button" onclick="emanation()">Emanation</button>
+        </div>
+    </div>
+    <div id="unit-info"></div>
 </div>
+
+
 </body>
 </html>
-
 <</nobr>>
 <<link "Camp">>
 <<script>>
