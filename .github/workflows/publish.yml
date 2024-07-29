@@ -28,6 +28,7 @@ jobs:
       - name: Copy media files and scripts
         run: |
           mkdir -p dist/media
+          mkdir -p dist/javascripts
           cp -R media/* dist/media/
           cp -R javascripts/* dist/javascripts
 
