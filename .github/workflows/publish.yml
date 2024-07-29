@@ -31,6 +31,7 @@ jobs:
           mkdir -p dist/javascripts
           cp -R media/* dist/media/
           cp -R javascripts/* dist/javascripts
+          cp units.json dist/units.json
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
