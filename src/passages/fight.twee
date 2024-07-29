@@ -37,7 +37,7 @@ document.getElementById("ui-bar").className = "stowed";
     <div id="actions">
     </div>
     <div class="button-container">
-      <button class="image-button" onclick="move()">Move</button>
+      <button id="moveButton" class="image-button">Move</button>
       <button class="image-button" onclick="attack()">Attack</button>
       <button class="image-button" onclick="lineAttack()">Line Attack</button>
       <button class="image-button" onclick="coneAttack()">Cone Attack</button>

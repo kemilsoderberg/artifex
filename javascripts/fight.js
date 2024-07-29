@@ -2,85 +2,83 @@
     let target = null;
     let unitsData = [];
     let showUnitInfo = true;
-    let numActions = SugarCube.State.variables.actions;
+    let moveCount = 0;
 
-function markIcon(id, event) {
-    event.stopPropagation();
-    clearUnitInfo();
+    function markIcon(id, event) {
+        event.stopPropagation();
+        clearUnitInfo();
 
-    const buttons = document.querySelectorAll('.icon-button');
-    buttons.forEach(button => button.classList.remove('marked'));
+        const buttons = document.querySelectorAll('.icon-button');
+        buttons.forEach(button => button.classList.remove('marked'));
 
-    const button = document.getElementById(id);
-    button.classList.add('marked');
+        const button = document.getElementById(id);
+        button.classList.add('marked');
 
-    target = id;
-    console.log(`Target set to: ${target}`);
+        target = id;
+        console.log(`Target set to: ${target}`);
 
-    const unitData = unitsData.find(unit => unit.id === id);
-    if (unitData) {
-        updateUnitInfo(unitData);
+        const unitData = unitsData.find(unit => unit.id === id);
+        if (unitData) {
+            updateUnitInfo(unitData);
+        }
     }
-}
 
-function updateUnitInfo(unit) {
-    const unitInfo = document.getElementById('unit-info');
-    let basicInfo = `
-        <h2>${unit.name}</h2>
-        <img src="${unit.image}" alt="${unit.type}">
-        <p><strong>Health:</strong> ${unit.health}</p>
-        <p><strong>Armor:</strong> ${unit.armor}</p>
-        <p><strong>Weapon:</strong> ${unit.weapon}</p>
-    `;
-
-    if (showUnitInfo) {
-        basicInfo += `
-            <br>
-            <p><strong>Speed: </strong> ${unit.attributes.speed}</p>
-            <p><strong>Strength: </strong> ${unit.attributes.strength}</p>
-            <p><strong>Agility: </strong> ${unit.attributes.agility}</p>
-            <p><strong>Constitution: </strong> ${unit.attributes.constitution}</p>
-            <p><strong>Perception: </strong> ${unit.attributes.perception}</p>
-            <p><strong>Precision: </strong> ${unit.attributes.precision}</p>
-            <p><strong>Defense: </strong> ${unit.attributes.defense}</p>
-            <p><strong>Luck: </strong> ${unit.attributes.luck}</p>
+    function updateUnitInfo(unit) {
+        const unitInfo = document.getElementById('unit-info');
+        let basicInfo = `
+            <h2>${unit.name}</h2>
+            <img src="${unit.image}" alt="${unit.type}">
+            <p><strong>Health:</strong> ${unit.health}</p>
+            <p><strong>Armor:</strong> ${unit.armor}</p>
+            <p><strong>Weapon:</strong> ${unit.weapon}</p>
         `;
+
+        if (showUnitInfo) {
+            basicInfo += `
+                <br>
+                <p><strong>Speed: </strong> ${unit.attributes.speed}</p>
+                <p><strong>Strength: </strong> ${unit.attributes.strength}</p>
+                <p><strong>Agility: </strong> ${unit.attributes.agility}</p>
+                <p><strong>Constitution: </strong> ${unit.attributes.constitution}</p>
+                <p><strong>Perception: </strong> ${unit.attributes.perception}</p>
+                <p><strong>Precision: </strong> ${unit.attributes.precision}</p>
+                <p><strong>Defense: </strong> ${unit.attributes.defense}</p>
+                <p><strong>Luck: </strong> ${unit.attributes.luck}</p>
+            `;
+        }
+
+        unitInfo.style.display = 'block';
+        unitInfo.innerHTML = basicInfo;
     }
 
-    unitInfo.style.display = 'block'; 
-    unitInfo.innerHTML = basicInfo;
-}
+    function playerInfo() {
+        const playerInfo = document.getElementById('player-info');
+        const attributes = SugarCube.State.variables.attributes;
 
-function playerInfo() {
-    const playerInfo = document.getElementById('player-info');
-    const attributes = SugarCube.State.variables.attributes;
+        let basicInfo = `
+            <h2>${SugarCube.State.variables.first_name}</h2>
+            <img src="${SugarCube.State.variables.profileImage}">
+            <p><strong>Health:</strong> ${SugarCube.State.variables.health[SugarCube.State.variables.healthIndex]}</p>
+            <br>
+            <p><strong>Speed: </strong> ${attributes.speed}</p>
+            <p><strong>Strength: </strong> ${attributes.strength}</p>
+            <p><strong>Agility: </strong> ${attributes.agility}</p>
+            <p><strong>Constitution: </strong> ${attributes.constitution}</p>
+            <p><strong>Perception: </strong> ${attributes.perception}</p>
+            <p><strong>Precision: </strong> ${attributes.precision}</p>
+            <p><strong>Defense: </strong> ${attributes.defense}</p>
+            <p><strong>Luck: </strong> ${attributes.luck}</p>
+        `;
 
-    let basicInfo = `
-        <h2>${SugarCube.State.variables.first_name}</h2>
-        <img src="${SugarCube.State.variables.profileImage}">
-        <p><strong>Health:</strong> ${SugarCube.State.variables.health[SugarCube.State.variables.healthIndex]}</p>
-        <br>
-        <p><strong>Speed: </strong> ${attributes.speed}</p>
-        <p><strong>Strength: </strong> ${attributes.strength}</p>
-        <p><strong>Agility: </strong> ${attributes.agility}</p>
-        <p><strong>Constitution: </strong> ${attributes.constitution}</p>
-        <p><strong>Perception: </strong> ${attributes.perception}</p>
-        <p><strong>Precision: </strong> ${attributes.precision}</p>
-        <p><strong>Defense: </strong> ${attributes.defense}</p>
-        <p><strong>Luck: </strong> ${attributes.luck}</p>
-    `;
+        playerInfo.style.display = 'block';
+        playerInfo.innerHTML = basicInfo;
+    }
 
-    playerInfo.style.display = 'block'; 
-    playerInfo.innerHTML = basicInfo;
-}
-
-
-function clearUnitInfo() {
-    const unitInfo = document.getElementById('unit-info');
-    unitInfo.style.display = 'none';
-    unitInfo.innerHTML = '';
-}
-
+    function clearUnitInfo() {
+        const unitInfo = document.getElementById('unit-info');
+        unitInfo.style.display = 'none';
+        unitInfo.innerHTML = '';
+    }
 
     function attack() {
         if (target) {
@@ -90,8 +88,8 @@ function clearUnitInfo() {
         }
     }
 
-    document.addEventListener('click', function(event) {
-        if (!event.target.classList.contains('icon-button') && !event.target.classList.contains('image-button')) {
+    document.addEventListener('click', function (event) {
+        if (!event.target.classList.contains('icon-button') && !event.target.classList.contains('image-button') && moveCount === 0) {
             const buttons = document.querySelectorAll('.icon-button');
             buttons.forEach(button => button.classList.remove('marked'));
 
@@ -100,7 +98,6 @@ function clearUnitInfo() {
             clearUnitInfo();
         }
     });
-
 
     async function fetchJSONData() {
         try {
@@ -124,41 +121,40 @@ function clearUnitInfo() {
         }
     }
 
-function generateRandomUnit(units, unitType) {
-    const filteredUnits = units.filter(u => u.type === unitType);
-    const unitTypeData = filteredUnits[Math.floor(Math.random() * filteredUnits.length)];
-    const name = unitTypeData.namePool[Math.floor(Math.random() * unitTypeData.namePool.length)];
-    const attributes = {};
-    for (const attr in unitTypeData.attributes) {
-        const min = unitTypeData.attributes[attr].min;
-        const max = unitTypeData.attributes[attr].max;
-        attributes[attr] = Math.floor(Math.random() * (max - min + 1)) + min;
+    function generateRandomUnit(units, unitType) {
+        const filteredUnits = units.filter(u => u.type === unitType);
+        const unitTypeData = filteredUnits[Math.floor(Math.random() * filteredUnits.length)];
+        const name = unitTypeData.namePool[Math.floor(Math.random() * unitTypeData.namePool.length)];
+        const attributes = {};
+        for (const attr in unitTypeData.attributes) {
+            const min = unitTypeData.attributes[attr].min;
+            const max = unitTypeData.attributes[attr].max;
+            attributes[attr] = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        const health = unitTypeData.health[Math.floor(Math.random() * (4 - 1 + 1)) + 1];
+
+        const armor = unitTypeData.armor[Math.floor(Math.random() * unitTypeData.armor.length)];
+        const weapon = unitTypeData.weapon[Math.floor(Math.random() * unitTypeData.weapon.length)];
+
+        applyEffects(attributes, armor.effects);
+        applyEffects(attributes, weapon.effects);
+
+        return {
+            type: unitTypeData.type,
+            name,
+            attributes,
+            health,
+            image: unitTypeData.image,
+            armor: armor.type,
+            weapon: weapon.type
+        };
     }
-    const health = unitTypeData.health[Math.floor(Math.random() * (4 - 1 + 1)) + 1]; 
-
-    const armor = unitTypeData.armor[Math.floor(Math.random() * unitTypeData.armor.length)];
-    const weapon = unitTypeData.weapon[Math.floor(Math.random() * unitTypeData.weapon.length)];
-
-    applyEffects(attributes, armor.effects);
-    applyEffects(attributes, weapon.effects);
-
-    return { 
-        type: unitTypeData.type, 
-        name, 
-        attributes, 
-        health, 
-        image: unitTypeData.image, 
-        armor: armor.type, 
-        weapon: weapon.type 
-    };
-}
-
 
     function getRandomPosition(occupiedPositions) {
         let position;
         do {
-            const row = Math.floor(Math.random() * 9) + 1; 
-            const column = Math.floor(Math.random() * 5) + 6; 
+            const row = Math.floor(Math.random() * 9) + 1;
+            const column = Math.floor(Math.random() * 5) + 6;
             position = `${row}-${column}`;
         } while (occupiedPositions.has(position));
         occupiedPositions.add(position);
@@ -174,7 +170,7 @@ function generateRandomUnit(units, unitType) {
                 break;
             }
         }
-    }   
+    }
 
     function showFirstHiddenAction() {
         const actions = document.querySelectorAll(".action");
@@ -199,16 +195,16 @@ function generateRandomUnit(units, unitType) {
 
     function updateNumberOfActions() {
         document.documentElement.style.setProperty('--actionColumns', SugarCube.State.variables.actions);
-        
+
         let numCols = parseInt(document.documentElement.style.getPropertyValue('--actionColumns'));
         for (let i = 1; i <= numCols; i++) {
-          let actionDiv = document.createElement('div');
-          actionDiv.classList.add('action');
-          actionDiv.id = `a${i}`;
-          actionDiv.innerHTML += `<p></p>`;
-          actions.appendChild(actionDiv);
+            let actionDiv = document.createElement('div');
+            actionDiv.classList.add('action');
+            actionDiv.id = `a${i}`;
+            actionDiv.innerHTML += `<p></p>`;
+            actions.appendChild(actionDiv);
         }
-      }
+    }
 
     async function placeUnits() {
         const units = await fetchJSONData();
@@ -243,25 +239,70 @@ function generateRandomUnit(units, unitType) {
         playerToken.id = 'player-token';
         playerToken.className = 'icon-button';
         playerToken.onclick = (event) => markIcon('player-token', event);
-        playerToken.style.gridRowStart = 5; 
-        playerToken.style.gridColumnStart = 4; 
+        playerToken.style.gridRowStart = 5;
+        playerToken.style.gridColumnStart = 4;
         gameBoard.appendChild(playerToken);
+
+        window.occupiedPositions = occupiedPositions;
+
+        return occupiedPositions;
     }
 
-    function move() { 
-        const gameBoard = document.getElementById('main-container'); const playerToken = document.getElementById('player-token');
-        const rect = gameBoard.getBoundingClientRect(); const mouseX = event.clientX - rect.left; const mouseY = event.clientY - rect.top;       
-        const row = Math.floor(mouseY / (rect.height / 9)); const column = Math.floor(mouseX / (rect.width / 9));
-        playerToken.style.gridRowStart = row + 1; playerToken.style.gridColumnStart = column + 1; 
-    }
+    function moveTokenTo(row, col) {
+        if (window.occupiedPositions.has(`${row}-${col}`)) {
+            console.log("That position is occupied: " + row + "-" + col);
+            return;
+        }
+    
+        const playerToken = document.getElementById('player-token');
+        playerToken.style.gridRowStart = row;
+        playerToken.style.gridColumnStart = col;
+        window.moveCount = 0;
+    
+        const cells = document.querySelectorAll('#main-container > div');
+        cells.forEach(cell => {
+            cell.style.border = "none";
+        });
+        hideLastVisibleAction();
+    };
+    
 
-    $(document).ready(function() {
-        updateNumberOfActions(3);
-        placeUnits();
-        playerInfo();
+    document.getElementById('moveButton').addEventListener('click', () => {
+        console.log("Move button clicked!");
+        window.moveCount = 1;
+    
+        const cells = document.querySelectorAll('#main-container > div');
+        cells.forEach(cell => {
+            cell.style.border = "1px solid black";
+        });
     });
+    
+    
+    $(document).ready(function() {
+        updateNumberOfActions();
+        playerInfo();
+        placeUnits().then(() => {
+            const moveButton = document.getElementById('moveButton');
+            const mainContainer = document.getElementById('main-container');
+
+            for (let row = 1; row <= 9; row++) {
+                for (let col = 1; col <= 10; col++) {
+                    const cell = document.createElement('div');
+                    cell.style.gridRowStart = row;
+                    cell.style.gridColumnStart = col;
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    mainContainer.appendChild(cell);
+                    cell.addEventListener('click', () => {
+                        if (window.moveCount === 1) {
+                            moveTokenTo(row, col);
+                        }
+                    });
+                }
+            }
+        });
+    }); 
 
     window.markIcon = markIcon;
     window.attack = attack;
-    window.move = move;
 })();

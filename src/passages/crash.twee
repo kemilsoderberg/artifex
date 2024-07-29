@@ -7,6 +7,7 @@ You awaken in a smoldering crater, the aftermath of your own catastrophic descen
 <<set $intro to false>>
 <<set $location to "Unknown">> 
 <<set $dayIndex to 0>>
+<<set $actions to 3>>
 
 <<shakescreen 2s>>
 
