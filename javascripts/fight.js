@@ -80,22 +80,34 @@
         unitInfo.innerHTML = '';
     }
 
+    function removeTarget() {
+        const buttons = document.querySelectorAll('.icon-button');
+        buttons.forEach(button => button.classList.remove('marked'));
+
+        target = null;
+        console.log('Target removed');
+        clearUnitInfo();
+    }
+
     function attack() {
         if (target) {
             console.log(`Attacking target: ${target}`);
+            
+            const targetElement = document.getElementById(target);
+            if (targetElement) {
+                targetElement.remove();
+                removeTarget();
+            } else {
+                console.log('Target element not found.');
+            }
         } else {
             console.log('No target selected.');
         }
     }
-
+    
     document.addEventListener('click', function (event) {
         if (!event.target.classList.contains('icon-button') && !event.target.classList.contains('image-button') && moveCount === 0) {
-            const buttons = document.querySelectorAll('.icon-button');
-            buttons.forEach(button => button.classList.remove('marked'));
-
-            target = null;
-            console.log('Target removed');
-            clearUnitInfo();
+            removeTarget();
         }
     });
 
@@ -282,7 +294,6 @@
         updateNumberOfActions();
         playerInfo();
         placeUnits().then(() => {
-            const moveButton = document.getElementById('moveButton');
             const mainContainer = document.getElementById('main-container');
 
             for (let row = 1; row <= 9; row++) {
