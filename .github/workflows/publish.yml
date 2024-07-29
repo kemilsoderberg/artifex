@@ -29,7 +29,6 @@ jobs:
         run: |
           mkdir -p dist/media
           cp -R media/* dist/media/
-          cp phaser.min.js dist/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
